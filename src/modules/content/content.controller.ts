@@ -1,7 +1,10 @@
 import {
   Controller,
-  Inject
+  Inject,
+  Post
 } from '@nestjs/common';
+import { CreateContentDto } from './dto/create-content.dto';
+import { Content } from './entities/content.entity';
 import type { ContentServiceInterface } from './interface/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from './interface/content.service.interface';
 
@@ -16,5 +19,12 @@ export class ContentController {
     private readonly contentService: ContentServiceInterface
   ){}
 
-
+  @Post()
+  create(d: CreateContentDto) {
+    try {
+      const content = this.contentService.create(d)
+    } catch(err : unknown) {
+        
+    }
+  }
 }
