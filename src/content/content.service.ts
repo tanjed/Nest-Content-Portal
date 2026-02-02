@@ -1,13 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-import { CONTENT_REPO_TOKEN } from './interface/content.repository.interface';
-import type { ContentRepositoryInterface } from './interface/content.repository.interface';  
+import type { ContentRepositoryInterface } from './interface/content.repository.interface';
+import { CONTENT_REPOSITORY_INTERFACE } from './interface/content.repository.interface';
 
 @Injectable()
 export class ContentService {
   constructor(
-    @Inject(CONTENT_REPO_TOKEN)
+    @Inject(CONTENT_REPOSITORY_INTERFACE)
     private readonly contentRepository : ContentRepositoryInterface,
   ){}
   
@@ -19,8 +19,14 @@ export class ContentService {
     return `This action returns all content`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} content`;
+  async findOne(id: string) {
+    const content = await this.contentRepository.find(id)
+
+    if (!content) {
+      throw new NotFoundException(`Content with ID ${id} not found`);
+    }
+
+    return content
   }
 
   update(id: number, updateContentDto: UpdateContentDto) {

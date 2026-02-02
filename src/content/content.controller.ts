@@ -1,18 +1,9 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-  ParseIntPipe,
-  DefaultValuePipe,
+  Inject
 } from '@nestjs/common';
-import { ContentService } from './content.service';
-import { CreateContentDto } from './dto/create-content.dto';
-import { UpdateContentDto } from './dto/update-content.dto';
+import type { ContentServiceInterface } from './interface/content.service.interface';
+import { CONTENT_SERVICE_INTERFACE } from './interface/content.service.interface';
 
 /**
  * Content Controller - HTTP Layer
@@ -20,53 +11,10 @@ import { UpdateContentDto } from './dto/update-content.dto';
  */
 @Controller('content')
 export class ContentController {
-  constructor(private readonly contentService: ContentService) {}
+  constructor(
+    @Inject(CONTENT_SERVICE_INTERFACE)
+    private readonly contentService: ContentServiceInterface
+  ){}
 
-  @Post()
-  create(@Body() createContentDto: CreateContentDto) {
-    return this.contentService.create(createContentDto);
-  }
 
-  @Get()
-  findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-  ) {
-    return this.contentService.findAll(page, limit);
-  }
-
-  @Get('published')
-  getPublished() {
-    return this.contentService.getPublishedContent();
-  }
-
-  @Get('slug/:slug')
-  findBySlug(@Param('slug') slug: string) {
-    return this.contentService.findBySlug(slug);
-  }
-
-  @Get('author/:authorId')
-  getByAuthor(@Param('authorId') authorId: string) {
-    return this.contentService.getByAuthor(authorId);
-  }
-
-  @Get('category/:categoryId')
-  getByCategory(@Param('categoryId') categoryId: string) {
-    return this.contentService.getByCategory(categoryId);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contentService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContentDto: UpdateContentDto) {
-    return this.contentService.update(id, updateContentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contentService.remove(id);
-  }
 }
