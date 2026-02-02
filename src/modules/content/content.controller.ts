@@ -7,6 +7,7 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { Content } from './entities/content.entity';
 import type { ContentServiceInterface } from './interface/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from './interface/content.service.interface';
+import { QueryFailedError } from 'typeorm';
 
 /**
  * Content Controller - HTTP Layer
@@ -21,10 +22,13 @@ export class ContentController {
 
   @Post()
   create(d: CreateContentDto) {
-    try {
-      const content = this.contentService.create(d)
-    } catch(err : unknown) {
-        
+    const content = this.contentService.create(d)
+    return {
+      id: content.id,
+      title: content.title,
+      thumbnail: content.thumbnail || null,
+      content: content.body,
+      published_at: content.publishedAt
     }
   }
 }

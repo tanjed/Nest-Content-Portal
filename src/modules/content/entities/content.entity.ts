@@ -24,7 +24,7 @@ export class Content {
   title: string;
 
   @Column({ type: 'text' })
-  content: string;
+  body: string;
 
   @Column({ type: 'varchar', length: 500, nullable: true })
   thumbnail: string;
