@@ -42,9 +42,6 @@ export class Content {
   @Column({ name: 'category_id', type: 'uuid' })
   categoryId: string;
 
-  @Column({ name: 'excerpt', type: 'varchar', length: 500, nullable: true })
-  excerpt: string;
-
   @Column({ name: 'slug', type: 'varchar', length: 255, unique: true })
   slug: string;
 

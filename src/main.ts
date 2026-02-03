@@ -1,10 +1,16 @@
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { ApiResponseInterceptor } from './common/interceptors/response.interceptor';
+import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
+import { ApiResponseInterceptor } from './shared/interceptors/response.interceptor';
 
 async function bootstrap() {
+  dayjs.extend(utc)
+  dayjs.extend(timezone)
+
   const app = await NestFactory.create(AppModule);
 
   // Global exception filter for errors (4xx, 5xx)
@@ -31,6 +37,7 @@ async function bootstrap() {
       }
   }))
 
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

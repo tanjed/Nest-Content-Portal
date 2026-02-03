@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ContentController } from './content.controller';
-import { ContentService } from './content.service';
-import { CONTENT_REPOSITORY_INTERFACE } from './interface/content.repository.interface';
-import { CONTENT_SERVICE_INTERFACE } from './interface/content.service.interface';
-import { ContentRepository } from './repository/content.repository';
+import { ContentController } from './controller/content.controller';
 import { Content } from './entities/content.entity';
+
+import { ContentRepository } from './repository/content.repository';
+import { CONTENT_REPOSITORY_INTERFACE } from './repository/content.repository.interface';
+import { ContentService } from './service/content.service';
+import { CONTENT_SERVICE_INTERFACE } from './service/content.service.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Content])],
   controllers: [ContentController],
   providers: [
+    ContentRepository,
     {
       provide: CONTENT_REPOSITORY_INTERFACE,
       useClass: ContentRepository,
@@ -20,5 +22,6 @@ import { Content } from './entities/content.entity';
       useClass: ContentService,
     }
   ],
+  exports : [CONTENT_SERVICE_INTERFACE],
 })
 export class ContentModule {}

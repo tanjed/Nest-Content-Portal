@@ -1,5 +1,5 @@
-import { Controller, Inject, Post, Body } from '@nestjs/common';
-import { CreateContentDto } from './dto/create-content.dto';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { CreateContentDto } from '../dto/create-content.dto';
 import type { ContentServiceInterface } from './interface/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from './interface/content.service.interface';
 
