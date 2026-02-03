@@ -3,16 +3,25 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import type { ContentRepositoryInterface } from './interface/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from './interface/content.repository.interface';
+import { Content } from './entities/content.entity';
 
 @Injectable()
 export class ContentService {
   constructor(
     @Inject(CONTENT_REPOSITORY_INTERFACE)
-    private readonly contentRepository : ContentRepositoryInterface,
-  ){}
-  
-  create(createContentDto: CreateContentDto) {
-    return 'This action adds a new content';
+    private readonly contentRepository: ContentRepositoryInterface,
+  ) {}
+
+  async create(createContentDto: CreateContentDto): Promise<Content> {
+    const { publishedAt, ...rest } = createContentDto;
+
+    const data: Partial<Content> = {
+      ...rest,
+      views: 0,
+      publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+    };
+
+    return this.contentRepository.create(data);
   }
 
   findAll() {

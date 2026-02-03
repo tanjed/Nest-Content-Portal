@@ -1,5 +1,6 @@
+import { IsDateString, IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 import { ContentStatus } from '../entities/content.entity';
-import { IsString, IsEnum, IsOptional, IsUUID, MaxLength, IsDateString } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export class CreateContentDto {
   @IsString()
@@ -7,7 +8,7 @@ export class CreateContentDto {
   title: string;
 
   @IsString()
-  content: string;
+  body: string;
 
   @IsOptional()
   @IsString()
@@ -35,5 +36,6 @@ export class CreateContentDto {
 
   @IsOptional()
   @IsDateString()
+  @Expose({ name: 'published_at' })
   publishedAt?: string;
 }

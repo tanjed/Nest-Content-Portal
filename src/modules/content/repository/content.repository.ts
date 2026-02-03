@@ -21,8 +21,9 @@ export class ContentRepository implements ContentRepositoryInterface {
     findAll(): Promise<Content[]> {
         throw new Error("Method not implemented.");
     }
-    create(c: Content): string {
-        throw new Error("Method not implemented.");
+    async create(c: Partial<Content>): Promise<Content> {
+        const content = this.repo.create(c);
+        return this.repo.save(content);
     }
     update(id: string, params: Partial<Content>): Promise<Content | null> {
         throw new Error("Method not implemented.");
