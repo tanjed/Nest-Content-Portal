@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Inject, NotFoundException, Post, Query, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, NotFoundException, Post, Put, Query, UsePipes } from '@nestjs/common';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { SlugGeneratorPipe } from '../pipe/slug.generator.pipe';
 import type { ContentServiceInterface } from '../service/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from '../service/content.service.interface';
+import { UpdateContentDto } from '../dto/update-content.dto';
 
 
 @Controller('admin/content')
@@ -15,13 +16,7 @@ export class ContentAdminController {
 
   @Get(':id')
   async getPostById(id: string) {
-    const content = await this.contentService.find(id);
-
-    if (!content) {
-      throw new NotFoundException(`Content with ID ${id} not found`);
-    }
-
-    return content;
+    return await this.contentService.find(id);
   }
 
   @Get()
@@ -35,6 +30,13 @@ export class ContentAdminController {
     return this.contentService.create(createContentDto);
   }
 
-  async update() {}
-  async delete() {}
+  @Put(':id')
+  async update(id: string, updateContentDto: UpdateContentDto) {
+    return this.contentService.update(id, updateContentDto);
+  }
+
+  @Delete(':id')
+  async delete(id: string) {
+    return this.contentService.delete(id);
+  }
 }

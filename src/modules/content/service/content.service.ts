@@ -9,9 +9,10 @@ import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { TransactionService } from 'src/shared/db/transaction.service';
+import { ContentServiceInterface } from './content.service.interface';
 
 @Injectable()
-export class ContentService {
+export class ContentService implements ContentServiceInterface {
   constructor(
     @Inject(CONTENT_REPOSITORY_INTERFACE)
     private readonly contentRepository: ContentRepositoryInterface,
@@ -30,11 +31,7 @@ export class ContentService {
     return this.contentRepository.create(data, queryRunner);
   }
 
-  findAll(queryRunner?: QueryRunner) {
-    return this.contentRepository.findAll(queryRunner);
-  }
-
-  findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResult<Content>> {
+  async findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResult<Content>> {
     return this.contentRepository.findPaginated({
       page: dto.page,
       limit: dto.limit,
@@ -44,7 +41,7 @@ export class ContentService {
     });
   }
 
-  async findOne(id: string, queryRunner?: QueryRunner) {
+  async find(id: string, queryRunner?: QueryRunner) {
     const content = await this.contentRepository.find(id, queryRunner);
 
     if (!content) {
@@ -64,11 +61,13 @@ export class ContentService {
     return content;
   }
 
-  async remove(id: string, queryRunner?: QueryRunner): Promise<void> {
-    const deleted = await this.contentRepository.delete(id, queryRunner);
+  async delete(id: string, queryRunner?: QueryRunner): Promise<boolean> {
 
-    if (!deleted) {
+    const content = await this.contentRepository.find(id, queryRunner);
+
+    if (!content) {
       throw new NotFoundException(`Content with ID ${id} not found`);
     }
+    return await this.contentRepository.delete(id, queryRunner);
   }
 }
