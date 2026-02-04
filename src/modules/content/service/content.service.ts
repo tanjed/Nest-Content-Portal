@@ -15,7 +15,6 @@ export class ContentService {
     private readonly contentRepository: ContentRepositoryInterface,
   ) {}
 
-  @UsePipes(new SlugGeneratorPipe())
   async create(createContentDto: CreateContentDto): Promise<Content> {
     const { publishedAt, ...rest } = createContentDto;
 
