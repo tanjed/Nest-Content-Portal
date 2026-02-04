@@ -1,5 +1,8 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { DataSource, QueryRunner, DataSourceOptions } from 'typeorm';
+import { DataSource, QueryRunner } from 'typeorm';
+
+
+type TransactionCallback<T> = (queryRunner: QueryRunner) => Promise<T>;
 
 @Injectable({ scope: Scope.DEFAULT })
 export class TransactionService {
@@ -13,7 +16,7 @@ export class TransactionService {
    * @param callback Function to execute within transaction
    * @returns Result of the callback
    */
-  async execute<T>(callback: (queryRunner: QueryRunner) => Promise<T>): Promise<T> {
+  async execute<T>(callback: TransactionCallback<T>): Promise<T> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();

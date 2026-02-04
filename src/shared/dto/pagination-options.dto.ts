@@ -1,5 +1,5 @@
 export interface PaginationOptions {
-  page?: number;
+  page : number;
   limit?: number;
 }
 

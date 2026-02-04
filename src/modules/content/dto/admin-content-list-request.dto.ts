@@ -22,7 +22,7 @@ export class AdminContentListRequestDto implements PaginationOptions {
   @IsOptional()
   @IsInt()
   @IsPositive()
-  page?: number = 1;
+  page : number = 1;
 
   @IsOptional()
   @IsInt()

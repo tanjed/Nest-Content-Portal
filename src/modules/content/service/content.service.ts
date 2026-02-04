@@ -1,14 +1,14 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { PaginatedResult } from 'src/shared/dto/pagination-options.dto';
-import { TransactionService } from 'src/shared/transaction/transaction.service';
 import { DeepPartial, QueryRunner } from 'typeorm';
-import { PaginationDto } from '../dto/admin-content-list-request.dto';
+import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { UpdateContentDto } from '../dto/update-content.dto';
 import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
+import { TransactionService } from 'src/shared/db/transaction.service';
 
 @Injectable()
 export class ContentService {
@@ -27,23 +27,20 @@ export class ContentService {
       publishedAt: publishedAt ? new Date(publishedAt) : dayjs().utc().format(),
     };
 
-    return this.transactionService.execute(async (queryRunner) => {
-       return this.contentRepository.create(data, queryRunner);
-    });
+    return this.contentRepository.create(data, queryRunner);
   }
 
   findAll(queryRunner?: QueryRunner) {
     return this.contentRepository.findAll(queryRunner);
   }
 
-  findAllPaginated(dto: PaginationDto): Promise<PaginatedResult<Content>> {
+  findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResult<Content>> {
     return this.contentRepository.findPaginated({
       page: dto.page,
       limit: dto.limit,
       sortBy: dto.sortBy,
       sortOrder: dto.sortOrder,
-      search: dto.search,
-      searchFields: ['title', 'excerpt'],
+      dateRange: dto.dateRange,
     });
   }
 
