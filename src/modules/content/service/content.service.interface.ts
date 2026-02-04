@@ -7,9 +7,9 @@ import { UpdateContentDto } from "../dto/update-content.dto"
 export const CONTENT_SERVICE_INTERFACE = Symbol('CONTENT_SERVICE_INTERFACE')
 
 export interface ContentServiceInterface {
-    find(id: string): Promise<Content | null>
+    find(id: string): Promise<Content>
     findAllPaginated(request: AdminContentListRequestDto): Promise<PaginatedResult<Content>>
     create(createContentDto: CreateContentDto): Promise<Content>
     update(id: string, updateContentDto: UpdateContentDto): Promise<Content>
-    delete(id: string): Promise<boolean>
+    delete(id: string): Promise<void>
 }
