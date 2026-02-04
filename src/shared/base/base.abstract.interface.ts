@@ -1,16 +1,6 @@
 import { DeepPartial, FindOptionsWhere, QueryRunner, Repository } from "typeorm";
 import { BaseRepositoryInterface } from "./base.repository.interface";
 
-/**
- * Helper to get the appropriate repository (transactional or regular)
- */
-const getRepository = <T extends object>(
-    repository: Repository<T>,
-    queryRunner?: QueryRunner,
-): Repository<T> => {
-    return queryRunner ? queryRunner.manager.getRepository(repository.target) : repository;
-};
-
 export abstract class BaseRepository<T extends object> implements BaseRepositoryInterface<T> {
     constructor(
         protected readonly repository: Repository<T>
@@ -18,23 +8,23 @@ export abstract class BaseRepository<T extends object> implements BaseRepository
 
     find(id: string, queryRunner?: QueryRunner): Promise<T | null> {
         const options: FindOptionsWhere<T> = { id } as any;
-        const repo = getRepository(this.repository, queryRunner);
+        const repo = this.getRepository(this.repository, queryRunner);
         return repo.findOneBy(options);
     }
 
     findAll(queryRunner?: QueryRunner): Promise<T[]> {
-        const repo = getRepository(this.repository, queryRunner);
+        const repo = this.getRepository(this.repository, queryRunner);
         return repo.find();
     }
 
     create(data: DeepPartial<T>, queryRunner?: QueryRunner): Promise<T> {
-        const repo = getRepository(this.repository, queryRunner);
+        const repo = this.getRepository(this.repository, queryRunner);
         const entity = repo.create(data);
         return repo.save(entity);
     }
 
     async update(id: string, params: DeepPartial<T>, queryRunner?: QueryRunner): Promise<T | null> {
-        const repo = getRepository(this.repository, queryRunner);
+        const repo = this.getRepository(this.repository, queryRunner);
         const options: FindOptionsWhere<T> = { id } as any;
         const entity = await repo.findOneBy(options);
 
@@ -47,9 +37,13 @@ export abstract class BaseRepository<T extends object> implements BaseRepository
     }
 
     async delete(id: string, queryRunner?: QueryRunner): Promise<boolean> {
-        const repo = getRepository(this.repository, queryRunner);
+        const repo = this.getRepository(this.repository, queryRunner);
         const options: FindOptionsWhere<T> = { id } as any;
         const result = await repo.delete(options);
         return (result?.affected ?? 0) > 0;
     }
+
+    protected getRepository = <T extends object>(repository: Repository<T>, queryRunner?: QueryRunner): Repository<T> => {
+        return queryRunner ? queryRunner.manager.getRepository(repository.target) : repository;
+    };
 }

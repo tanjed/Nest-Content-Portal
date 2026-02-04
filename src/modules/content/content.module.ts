@@ -5,7 +5,9 @@ import { ContentServiceModule } from './service/content.service.module';
 import { ContentAdminController } from './controller/content.admin.controller';
 
 @Module({
-  imports: [ContentServiceModule],
+  imports: [
+    ContentServiceModule,
+  ],
   controllers: [ContentAdminController],
   providers: [
     SlugGeneratorPipe

@@ -22,7 +22,8 @@ import { ContentRepository } from "../repository/content.repository";
         }
     ],
     exports:[
-        CONTENT_SERVICE_INTERFACE
+        CONTENT_SERVICE_INTERFACE,
+        TypeOrmModule,
     ]
 })
 export class ContentServiceModule{}
