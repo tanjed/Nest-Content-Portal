@@ -1,28 +1,55 @@
-import { DeepPartial, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOptionsWhere, QueryRunner, Repository } from "typeorm";
 import { BaseRepositoryInterface } from "./base.repository.interface";
-import { InjectRepository } from "@nestjs/typeorm";
+
+/**
+ * Helper to get the appropriate repository (transactional or regular)
+ */
+const getRepository = <T extends object>(
+    repository: Repository<T>,
+    queryRunner?: QueryRunner,
+): Repository<T> => {
+    return queryRunner ? queryRunner.manager.getRepository(repository.target) : repository;
+};
 
 export abstract class BaseRepository<T extends object> implements BaseRepositoryInterface<T> {
     constructor(
         protected readonly repository: Repository<T>
     ){}
 
-    find(id: string): Promise<T | null> {
+    find(id: string, queryRunner?: QueryRunner): Promise<T | null> {
         const options: FindOptionsWhere<T> = { id } as any;
-        return this.repository.findOneBy(options);
+        const repo = getRepository(this.repository, queryRunner);
+        return repo.findOneBy(options);
     }
-    findAll(): Promise<T[]> {
-        throw new Error("Method not implemented.");
+
+    findAll(queryRunner?: QueryRunner): Promise<T[]> {
+        const repo = getRepository(this.repository, queryRunner);
+        return repo.find();
     }
-    create(data: DeepPartial<T>): Promise<T> {
-        const entity = this.repository.create(data)
-        return this.repository.save(entity)
+
+    create(data: DeepPartial<T>, queryRunner?: QueryRunner): Promise<T> {
+        const repo = getRepository(this.repository, queryRunner);
+        const entity = repo.create(data);
+        return repo.save(entity);
     }
-    update(id: string, params: DeepPartial<T>): Promise<T | null> {
-        throw new Error("Method not implemented.");
+
+    async update(id: string, params: DeepPartial<T>, queryRunner?: QueryRunner): Promise<T | null> {
+        const repo = getRepository(this.repository, queryRunner);
+        const options: FindOptionsWhere<T> = { id } as any;
+        const entity = await repo.findOneBy(options);
+
+        if (!entity) {
+            return null;
+        }
+
+        Object.assign(entity, params);
+        return repo.save(entity);
     }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+
+    async delete(id: string, queryRunner?: QueryRunner): Promise<boolean> {
+        const repo = getRepository(this.repository, queryRunner);
+        const options: FindOptionsWhere<T> = { id } as any;
+        const result = await repo.delete(options);
+        return (result?.affected ?? 0) > 0;
     }
-    
 }

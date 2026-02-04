@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContentModule } from './modules/content/content.module';
 import { UserModule } from './modules/user/user.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UserModule } from './modules/user/user.module';
         logging: configService.get('NODE_ENV') === 'development',
       }),
     }),
+    SharedModule,
     ContentModule,
     UserModule,
   ],
