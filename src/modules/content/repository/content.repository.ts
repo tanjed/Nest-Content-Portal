@@ -1,7 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import dayjs from "dayjs";
 import { BaseRepository } from "src/shared/base/base.abstract.interface";
-import { Repository } from "typeorm";
+import { PaginatedResult } from "src/shared/dto/pagination-options.dto";
+import { Between, Repository } from "typeorm";
+import { QueryRunner } from "typeorm/browser";
+import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dto";
 import { Content } from "../entities/content.entity";
 import { ContentRepositoryInterface } from "./content.repository.interface";
 
@@ -12,5 +16,40 @@ export class ContentRepository extends BaseRepository<Content> implements Conten
         protected readonly repository: Repository<Content>,
     ){
         super(repository)
+    }
+
+    async findPaginated(request: AdminContentListRequestDto, queryRunner?: QueryRunner): Promise<PaginatedResult<Content>> {
+        const {
+            page = 1,
+            limit = 10,
+            sortBy = 'publishedAt',
+            sortOrder,
+            dateRange,
+        } = request;
+
+        const repo = this.getRepository(this.repository, queryRunner);
+        const skip = (page - 1) * limit;
+
+        const [data, total] = await repo.findAndCount({
+            where: {
+                createdAt: Between(
+                    dayjs(dateRange.startDate).toDate(),
+                    dayjs(dateRange.endDate).toDate(),
+                ),
+            },
+            order: { [sortBy] : sortOrder },
+            skip,
+            take: limit,
+        });
+
+        return {
+            data,
+            meta: {
+                page,
+                limit,
+                total,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
     }
 }

@@ -1,13 +1,14 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { QueryRunner } from 'typeorm';
 import dayjs from 'dayjs';
-import { DeepPartial } from 'typeorm';
+import { PaginatedResult } from 'src/shared/dto/pagination-options.dto';
+import { TransactionService } from 'src/shared/transaction/transaction.service';
+import { DeepPartial, QueryRunner } from 'typeorm';
+import { PaginationDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { UpdateContentDto } from '../dto/update-content.dto';
 import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
-import { TransactionService } from 'src/shared/transaction/transaction.service';
 
 @Injectable()
 export class ContentService {
@@ -33,6 +34,17 @@ export class ContentService {
 
   findAll(queryRunner?: QueryRunner) {
     return this.contentRepository.findAll(queryRunner);
+  }
+
+  findAllPaginated(dto: PaginationDto): Promise<PaginatedResult<Content>> {
+    return this.contentRepository.findPaginated({
+      page: dto.page,
+      limit: dto.limit,
+      sortBy: dto.sortBy,
+      sortOrder: dto.sortOrder,
+      search: dto.search,
+      searchFields: ['title', 'excerpt'],
+    });
   }
 
   async findOne(id: string, queryRunner?: QueryRunner) {

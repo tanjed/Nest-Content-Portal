@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Inject, NotFoundException, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Inject, NotFoundException, Post, Query, UsePipes } from '@nestjs/common';
+import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { SlugGeneratorPipe } from '../pipe/slug.generator.pipe';
 import type { ContentServiceInterface } from '../service/content.service.interface';
@@ -24,8 +25,8 @@ export class ContentAdminController {
   }
 
   @Get()
-  async getAllPosts() {
-    return this.contentService.findAll();
+  async getAllPosts(@Query() request: AdminContentListRequestDto) {
+    return this.contentService.findAllPaginated(request);
   }
 
   @Post()
