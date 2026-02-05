@@ -1,14 +1,13 @@
 import * as bcrypt from 'bcrypt';
+import { Exclude } from 'class-transformer';
 import { Content } from "src/modules/content/entities/content.entity";
 import { Role } from "src/modules/role-permission/entity/role.entity";
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-export enum UserRoles {
-    ADMIN = 'admin',
-    EDITOR = 'editor',
-    REPORTER = 'reporter',
+export enum UserStatus {
+    ACTIVE = 1,
+    INACTIVE = 0,
 }
-
 @Entity('users')
 @Index(['email'])
 export class User {
@@ -21,17 +20,15 @@ export class User {
     @Column({name:'email', type:'varchar', length: 10})
     email:string;
 
+    @Exclude()
     @Column({name:'password', type:'varchar', length: 100})
     password:string;
 
-    @Column({name:'role', type:'enum', enum: UserRoles, default: UserRoles.REPORTER})
-    role: UserRoles;
-
-    @Column({name:'status', type:'tinyint', default:'1'})
-    status:number;
+    @Column({name:'status', type:'tinyint', default: UserStatus.ACTIVE})
+    status: UserStatus;
 
     @Column({name:'profile_img', type:"text", nullable: true})
-    porfileImage: string;
+    profileImage: string;
 
     @CreateDateColumn({name:'created_at', type:'datetime'})
     createdAt:Date;
@@ -46,12 +43,18 @@ export class User {
     @ManyToMany(() => Role, (role) => role.users)
     roles: Role[];
 
+    private isPasswordModified = false;
+
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword() {
-        if (this.password) {
-            const salt = await bcrypt.genSalt(10);
-            this.password = await bcrypt.hash(this.password, salt);
+        if (this.password && this.isPasswordModified) {
+            this.password = await bcrypt.hash(this.password, 10);
+            this.isPasswordModified = false;
         }
+    }
+
+    async validatePassword(password: string): Promise<boolean> {
+        return bcrypt.compare(password, this.password);
     }
 }

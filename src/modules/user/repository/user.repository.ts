@@ -11,4 +11,9 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     ) {
         super(userRepository);
     }
+    
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOne({ where: { email }, relations: {roles: true} });
+    }
+
 }

@@ -3,4 +3,6 @@ import { User } from "../entities/user.entity";
 
 
 export const USER_REPOSITORY_INTERFACE = Symbol('USER_REPOSITORY_INTERFACE');
-export interface UserRepositoryInterface extends BaseRepositoryInterface<User>{}
+export interface UserRepositoryInterface extends BaseRepositoryInterface<User>{
+    findByEmail(email: string): Promise<User | null>;
+}
