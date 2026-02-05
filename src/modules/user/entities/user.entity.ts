@@ -1,6 +1,7 @@
+import * as bcrypt from 'bcrypt';
 import { Content } from "src/modules/content/entities/content.entity";
 import { Role } from "src/modules/role-permission/entity/role.entity";
-import { Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum UserRoles {
     ADMIN = 'admin',
@@ -44,4 +45,13 @@ export class User {
     @JoinTable()
     @ManyToMany(() => Role, (role) => role.users)
     roles: Role[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword() {
+        if (this.password) {
+            const salt = await bcrypt.genSalt(10);
+            this.password = await bcrypt.hash(this.password, salt);
+        }
+    }
 }
