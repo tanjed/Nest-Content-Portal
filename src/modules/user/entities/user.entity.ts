@@ -1,5 +1,6 @@
 import { Content } from "src/modules/content/entities/content.entity";
-import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Role } from "src/modules/role-permission/entity/role.entity";
+import { Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum UserRoles {
     ADMIN = 'admin',
@@ -39,4 +40,8 @@ export class User {
 
     @OneToMany(() => Content, (content) => content.author)
     contents:Content[];
+
+    @JoinTable()
+    @ManyToMany(() => Role, (role) => role.users)
+    roles: Role[];
 }

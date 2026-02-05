@@ -6,7 +6,7 @@ export function IsAfter(
 ) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
-      name: 'isAfter',
+      name: 'IsAfter',
       target: object.constructor,
       propertyName,
       options: {
