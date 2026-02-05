@@ -1,4 +1,6 @@
 import { Module } from "@nestjs/common";
 
-@Module({})
+@Module({
+    imports: [RolePermissionModule],
+})
 export class RolePermissionModule {}

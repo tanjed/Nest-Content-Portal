@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseRepository } from 'src/shared/base/base.abstract.interface';
-import { In, Repository } from 'typeorm';
+import { FindOptionsRelations, FindOptionsSelect, In, Repository } from 'typeorm';
 import { Role } from '../entity/role.entity';
 import { RoleRepositoryInterface } from './role.repository.interface';
 
@@ -13,11 +13,17 @@ export class RoleRepository extends BaseRepository<Role> implements RoleReposito
         super(roleRepository);
     }
 
-    async findByIds(ids: string[]): Promise<Role[]> {
+    async findByIds(
+        ids: string[],
+        relations?: FindOptionsRelations<Role>,
+        select?: FindOptionsSelect<Role>,
+    ): Promise<Role[]> {
         return this.roleRepository.find({
             where: {
                 id: In(ids),
             },
+            relations,
+            select,
         });
     }
 }

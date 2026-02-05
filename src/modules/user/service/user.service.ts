@@ -34,13 +34,18 @@ export class UserService implements UserServiceInterface {
                 password: data.password,
                 roles: roles,
             };
-
+            
             return this.userRepository.create(userData, queryRunner);
         });
     }
 
     async authenticateUser(email: string, password: string): Promise<User> {
-        const user = await this.userRepository.findByEmail(email);
+        const user = await this.userRepository.findByEmail(email, { roles: true }, { password: true, status: true, id: true, email: true, full_name: true, roles: {
+            name: true,
+            permissions: {
+                name: true,
+            }
+        } });
 
         if (!user) {
             throw new UnauthorizedException('Invalid email or password');

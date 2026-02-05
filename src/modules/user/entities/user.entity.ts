@@ -17,7 +17,7 @@ export class User {
     @Column({name:'full_name', type:'varchar', length: 50})
     full_name:string;
 
-    @Column({name:'email', type:'varchar', length: 10})
+    @Column({name:'email', type:'varchar', length: 100, unique: true})
     email:string;
 
     @Exclude()
@@ -43,14 +43,12 @@ export class User {
     @ManyToMany(() => Role, (role) => role.users)
     roles: Role[];
 
-    private isPasswordModified = false;
-
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword() {
-        if (this.password && this.isPasswordModified) {
-            this.password = await bcrypt.hash(this.password, 10);
-            this.isPasswordModified = false;
+        if (this.password) {
+            const salt = await bcrypt.genSalt(10);
+            this.password = await bcrypt.hash(this.password, salt);
         }
     }
 
