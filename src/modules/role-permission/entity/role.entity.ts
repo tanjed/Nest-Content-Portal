@@ -19,8 +19,8 @@ export class Role {
     @Column({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @JoinTable()
     @ManyToMany(() => Permission, (permission) => permission.roles)
+    @JoinTable()
     permissions: Permission[];
 
     @ManyToMany(() => User, (user) => user.roles)

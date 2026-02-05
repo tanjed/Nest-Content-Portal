@@ -40,23 +40,19 @@ export class UserService implements UserServiceInterface {
     }
 
     async authenticateUser(email: string, password: string): Promise<User> {
-        const user = await this.userRepository.findByEmail(email, { roles: true }, { password: true, status: true, id: true, email: true, full_name: true, roles: {
-            name: true,
-            permissions: {
-                name: true,
-            }
-        } });
+        const user = await this.userRepository.findByEmail(email, { roles: true });
 
         if (!user) {
             throw new UnauthorizedException('Invalid email or password');
         }
+
         const isPasswordValid = await user.validatePassword(password);
 
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid email or password');
         }
 
-        if(user.status !== UserStatus.ACTIVE) {
+        if (user.status !== UserStatus.ACTIVE) {
             throw new UnauthorizedException('User account is inactive');
         }
 

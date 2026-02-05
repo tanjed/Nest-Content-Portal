@@ -1,4 +1,4 @@
-import { Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Post } from "@nestjs/common";
 import type { JwtServiceInterface } from "src/shared/jwt/jwt.service.interface";
 import { JWT_SERVICE_INTERFACE } from "src/shared/jwt/jwt.service.interface";
 import { AdminLoginDto } from "../dto/admin-login.dto";
@@ -20,8 +20,8 @@ export class UserAuthController {
     ) {}
 
     @Post('admin/register')
-    async createUser(req: CreateUserDto){
-        const user = await this.userService.createUser(req);
+    async createUser(@Body() body: CreateUserDto) {
+        const user = await this.userService.createUser(body);
 
         return {
             id: user.id,
@@ -31,20 +31,18 @@ export class UserAuthController {
     }
 
     @Post('admin/login')
-    async login(req: AdminLoginDto){
-        const user = await this.userService.authenticateUser(req.email, req.password);
+    async login(@Body() body: AdminLoginDto) {
+        const user = await this.userService.authenticateUser(body.email, body.password);
 
         const token = await this.jwtService.generateToken({
             sub: user.id,
             email: user.email,
-            roles: user.roles.map(role => role.name),
-            permissions: user.roles.flatMap(role =>
-                role.permissions.map(permission => permission.name),
-            ),
-        })
+            roles: user.roles?.map(role => role.name) || [],
+            permissions: user.roles?.flatMap(role =>
+                role.permissions?.map(permission => permission.name) || [],
+            ) || [],
+        });
 
-        return {
-            token : token,
-        };
+        return { token };
     }
 }

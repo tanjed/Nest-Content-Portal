@@ -39,16 +39,15 @@ export class User {
     @OneToMany(() => Content, (content) => content.author)
     contents:Content[];
 
-    @JoinTable()
     @ManyToMany(() => Role, (role) => role.users)
+    @JoinTable()
     roles: Role[];
 
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword() {
-        if (this.password) {
-            const salt = await bcrypt.genSalt(10);
-            this.password = await bcrypt.hash(this.password, salt);
+        if (this.password && !this.password.startsWith('$2b$')) {
+            this.password = await bcrypt.hash(this.password, 10);
         }
     }
 
