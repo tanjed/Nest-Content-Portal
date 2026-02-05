@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Content } from "src/modules/content/entities/content.entity";
+import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum UserRoles {
     ADMIN = 'admin',
@@ -35,4 +36,7 @@ export class User {
 
     @UpdateDateColumn({name:'updated_at', type:'datetime'})
     updatedAt:Date;
+
+    @OneToMany(() => Content, (content) => content.author)
+    contents:Content[];
 }

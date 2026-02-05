@@ -1,4 +1,4 @@
-import { DeepPartial, FindOptionsWhere, QueryRunner, Repository } from "typeorm";
+import { DeepPartial, FindOptionsWhere, FindOptionsRelations, QueryRunner, Repository } from "typeorm";
 import { BaseRepositoryInterface } from "./base.repository.interface";
 
 export abstract class BaseRepository<T extends object> implements BaseRepositoryInterface<T> {
@@ -6,10 +6,13 @@ export abstract class BaseRepository<T extends object> implements BaseRepository
         protected readonly repository: Repository<T>
     ){}
 
-    find(id: string, queryRunner?: QueryRunner): Promise<T | null> {
+    find(id: string, relations?: FindOptionsRelations<T>, queryRunner?: QueryRunner): Promise<T | null> {
         const options: FindOptionsWhere<T> = { id } as any;
         const repo = this.getRepository(this.repository, queryRunner);
-        return repo.findOneBy(options);
+        return repo.findOne({
+            where: options,
+            relations,
+        });
     }
 
     findAll(queryRunner?: QueryRunner): Promise<T[]> {
