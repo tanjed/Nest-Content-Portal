@@ -1,11 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
-import { Attachment } from '../entity/attachment.entity';
-import { ATTACHMENT_REPOSITORY_INTERFACE } from '../repository/attachment.repository';
-import type { AttachmentServiceInterface } from './attachment.service.interface';
-import type { AttachmentRepositoryInterface } from '../repository/attachment.repository.interface';
+import { Inject, Injectable } from '@nestjs/common';
 import { Queue } from 'bullmq';
-import { QUEUE_AVAILABLE, ATTACHMENT_JOBS } from 'src/shared/queue/queue.list';
+import * as fs from 'fs';
+import { STORAGE_PATH } from 'src/app.module';
+import { AttachmentUploadJobData } from 'src/infrastructure/queue/processors/attachment-upload.processor';
+import { ATTACHMENT_JOBS, QUEUE_AVAILABLE } from 'src/infrastructure/queue/queue.list';
+import { ATTACHMENT_REPOSITORY_INTERFACE } from '../repository/attachment.repository';
+import type { AttachmentRepositoryInterface } from '../repository/attachment.repository.interface';
+import type { AttachmentServiceInterface } from './attachment.service.interface';
 
 @Injectable()
 export class AttachmentService implements AttachmentServiceInterface {
@@ -26,7 +28,20 @@ export class AttachmentService implements AttachmentServiceInterface {
     });
   }
 
-  async uploadAttachments(contentId: string, files: Express.Multer.File[]): Promise<void> {
-    // TODO: Implement actual upload logic (S3, etc.)
+  async uploadAttachments(data: AttachmentUploadJobData): Promise<void> {
+    
+    fs.mkdirSync(STORAGE_PATH, { recursive: true });
+
+    const dest = `${STORAGE_PATH}/${data.filename}`;
+
+    await new Promise<void>((resolve, reject) => {
+        fs.createReadStream(data.source)
+          .pipe(fs.createWriteStream(dest))
+          .on('finish', resolve)
+          .on('error', reject);
+    });
+    
+    this.attachmentRepository.update(data.contentId, { filename: dest });
+    fs.unlinkSync(data.source);
   }
 }

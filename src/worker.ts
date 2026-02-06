@@ -2,13 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { AppModule } from './app.module';
+import { WorkerModule } from './worker.module';
 
 async function bootstrap() {
   dayjs.extend(utc)
   dayjs.extend(timezone)
-
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  const app = await NestFactory.create(WorkerModule);
+  await app.init();
+  console.log('Worker is running...');
 }
+
 bootstrap();
