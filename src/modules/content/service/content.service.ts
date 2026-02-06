@@ -10,14 +10,14 @@ import type { ContentRepositoryInterface } from '../repository/content.repositor
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { ContentServiceInterface } from './content.service.interface';
 import type { AttachmentServiceInterface } from 'src/modules/attachments/service/attachment.service.interface';
-import { ATTACHMENT_REPOSITORY_INTERFACE } from 'src/modules/attachments/repository/attachment.repository';
+import { ATTACHMENT_SERVICE_INTERFACE } from 'src/modules/attachments/service/attachment.service.interface';
 
 @Injectable()
 export class ContentService implements ContentServiceInterface {
   constructor(
     @Inject(CONTENT_REPOSITORY_INTERFACE)
     private readonly contentRepository: ContentRepositoryInterface,
-    @Inject(ATTACHMENT_REPOSITORY_INTERFACE)
+    @Inject(ATTACHMENT_SERVICE_INTERFACE)
     private readonly attachmentService: AttachmentServiceInterface,
   ) {}
 

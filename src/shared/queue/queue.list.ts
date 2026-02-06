@@ -1,5 +1,22 @@
 export const QUEUE_AVAILABLE = {
-    CONTENT_ATTACHMENT_UPLOAD: 'attachment-upload',
-    PROFILE_IMAGE_UPLOAD: 'profile-image-upload',
-    PROFILE_COMPLETION_EMAIL: 'profile-completion-email',
-}
+  CONTENT_ATTACHMENT_UPLOAD: 'attachment-upload',
+  PROFILE_IMAGE_UPLOAD: 'profile-image-upload',
+  PROFILE_COMPLETION_EMAIL: 'profile-completion-email',
+} as const;
+
+
+export const QUEUE_JOBS = {
+  [QUEUE_AVAILABLE.CONTENT_ATTACHMENT_UPLOAD]: {
+    UPLOAD: 'upload',
+  },
+  [QUEUE_AVAILABLE.PROFILE_IMAGE_UPLOAD]: {
+    UPLOAD: 'upload',
+  },
+  [QUEUE_AVAILABLE.PROFILE_COMPLETION_EMAIL]: {
+    SEND_EMAIL: 'send-email',
+  },
+} as const;
+
+
+export const ATTACHMENT_JOBS = QUEUE_JOBS[QUEUE_AVAILABLE.CONTENT_ATTACHMENT_UPLOAD];
+export const PROFILE_JOBS = QUEUE_JOBS[QUEUE_AVAILABLE.PROFILE_IMAGE_UPLOAD];
