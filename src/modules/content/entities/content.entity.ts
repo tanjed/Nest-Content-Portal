@@ -1,3 +1,5 @@
+import { Category } from 'src/modules/category/entity/category.entity';
+import { SubCategory } from 'src/modules/sub-category/entity/sub-category.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Entity,
@@ -44,6 +46,9 @@ export class Content {
   @Column({ name: 'category_id', type: 'uuid' })
   categoryId: string;
 
+  @Column({ name: 'sub_category_id', type: 'uuid', nullable: true })
+  subCategoryId?: string;
+
   @Column({ name: 'slug', type: 'varchar', length: 255, unique: true })
   slug: string;
 
@@ -61,4 +66,10 @@ export class Content {
 
   @ManyToOne(() => User, (user) => user.contents)
   author: User;
+
+  @ManyToOne(() => Category, (category) => category.contents)
+  category: Category;
+
+  @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
+  subCategory: SubCategory;
 }
