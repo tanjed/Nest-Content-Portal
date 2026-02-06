@@ -10,4 +10,5 @@ export interface RoleRepositoryInterface extends BaseRepositoryInterface<Role> {
         relations?: FindOptionsRelations<Role>,
         select?: FindOptionsSelect<Role>,
     ): Promise<Role[]>;
+    findByName(name: string): Promise<Role | null>;
 }

@@ -27,4 +27,33 @@ export class PermissionRepository extends BaseRepository<Permission> implements 
             select,
         });
     }
+
+    async findByName(name: string): Promise<Permission | null> {
+        return this.permissionRepository.findOne({ where: { name } as any });
+    }
+
+    async findByNames(names: string[]): Promise<Permission[]> {
+        return this.permissionRepository.find({
+            where: {
+                name: In(names),
+            },
+        });
+    }
+
+    async findOrCreate(names: string[]): Promise<Permission[]> {
+        const permissions: Permission[] = [];
+
+        for (const name of names) {
+            let permission = await this.permissionRepository.findOne({ where: { name } as any });
+
+            if (!permission) {
+                permission = this.permissionRepository.create({ name });
+                await this.permissionRepository.save(permission);
+            }
+
+            permissions.push(permission);
+        }
+
+        return permissions;
+    }
 }

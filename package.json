@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed:run": "ts-node src/seed.ts",
+    "worker:start": "ts-node src/worker.ts"
   },
   "dependencies": {
     "@nestjs/bullmq": "^11.0.4",
@@ -33,6 +35,7 @@
     "class-validator": "^0.14.3",
     "dayjs": "^1.11.19",
     "ioredis": "^5.9.2",
+    "nest-commander": "^3.20.1",
     "pg": "^8.18.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",

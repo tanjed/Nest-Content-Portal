@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { WorkerModule } from './worker.module';
+import { WorkerModule } from './infrastructure/queue/worker.module';
 
 async function bootstrap() {
   dayjs.extend(utc)

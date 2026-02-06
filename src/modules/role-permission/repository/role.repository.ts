@@ -5,6 +5,7 @@ import { Role } from '../entity/role.entity';
 import { RoleRepositoryInterface } from './role.repository.interface';
 
 export const ROLE_REPOSITORY_INTERFACE = Symbol('ROLE_REPOSITORY_INTERFACE');
+
 export class RoleRepository extends BaseRepository<Role> implements RoleRepositoryInterface {
     constructor(
         @InjectRepository(Role)
@@ -24,6 +25,13 @@ export class RoleRepository extends BaseRepository<Role> implements RoleReposito
             },
             relations,
             select,
+        });
+    }
+
+    async findByName(name: string): Promise<Role | null> {
+        return this.roleRepository.findOne({
+            where: { name: name } as any,
+            relations: { permissions: true },
         });
     }
 }

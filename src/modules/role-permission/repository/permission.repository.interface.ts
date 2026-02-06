@@ -10,4 +10,7 @@ export interface PermissionRepositoryInterface extends BaseRepositoryInterface<P
         relations?: FindOptionsRelations<Permission>,
         select?: FindOptionsSelect<Permission>,
     ): Promise<Permission[]>;
+    findByName(name: string): Promise<Permission | null>;
+    findByNames(names: string[]): Promise<Permission[]>;
+    findOrCreate(names: string[]): Promise<Permission[]>;
 }
