@@ -1,12 +1,19 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { PaginatedOptionsDto } from 'src/shared/dto/pagination-options.dto';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { PaginationOptions } from 'src/shared/dto/pagination-options.dto';
 
 export enum SortField {
   NAME = 'name',
   CREATED_AT = 'createdAt',
 }
 
-export class ListCategoryDto extends PaginatedOptionsDto {
+export class ListCategoryDto implements PaginationOptions {
+  @IsNumber()
+  page: number;
+
+  @IsOptional()
+  @IsNumber()
+  limit?: number | undefined;
+
   @IsOptional()
   @IsString()
   search?: string;
@@ -14,4 +21,7 @@ export class ListCategoryDto extends PaginatedOptionsDto {
   @IsOptional()
   @IsEnum(SortField)
   sortBy?: SortField = SortField.CREATED_AT;
+
+  @IsOptional()
+  sortOrder?: 'ASC' | 'DESC' = 'DESC';
 }
