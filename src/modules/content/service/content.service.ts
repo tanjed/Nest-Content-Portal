@@ -9,15 +9,19 @@ import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { ContentServiceInterface } from './content.service.interface';
+import type { AttachmentServiceInterface } from 'src/modules/attachments/service/attachment.service.interface';
+import { ATTACHMENT_REPOSITORY_INTERFACE } from 'src/modules/attachments/repository/attachment.repository';
 
 @Injectable()
 export class ContentService implements ContentServiceInterface {
   constructor(
     @Inject(CONTENT_REPOSITORY_INTERFACE)
     private readonly contentRepository: ContentRepositoryInterface,
+    @Inject(ATTACHMENT_REPOSITORY_INTERFACE)
+    private readonly attachmentService: AttachmentServiceInterface,
   ) {}
 
-  async create(createContentDto: CreateContentDto, queryRunner?: QueryRunner): Promise<Content> {
+  async create(createContentDto: CreateContentDto, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
     const { publishedAt, ...rest } = createContentDto;
 
     const data: DeepPartial<Content> = {
@@ -25,8 +29,11 @@ export class ContentService implements ContentServiceInterface {
       views: 0,
       publishedAt: publishedAt ? new Date(publishedAt) : dayjs().utc().format(),
     };
-
-    return this.contentRepository.create(data, queryRunner);
+    const content = await this.contentRepository.create(data, queryRunner);
+    if(files && files.length > 0) {
+       await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
+    }
+    return content;
   }
 
   async findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResult<Content>> {
@@ -40,7 +47,7 @@ export class ContentService implements ContentServiceInterface {
   }
 
   async find(id: string, queryRunner?: QueryRunner): Promise<Content> {
-    const content = await this.contentRepository.find(id, queryRunner);
+    const content = await this.contentRepository.find(id);
 
     if (!content) {
       throw new NotFoundException(`Content with ID ${id} not found`);
@@ -49,7 +56,7 @@ export class ContentService implements ContentServiceInterface {
     return content;
   }
 
-  async update(id: string, updateContentDto: UpdateContentDto, queryRunner?: QueryRunner): Promise<Content> {
+  async update(id: string, updateContentDto: UpdateContentDto, files: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
     const content = await this.contentRepository.update(id, updateContentDto, queryRunner);
 
     if (!content) {

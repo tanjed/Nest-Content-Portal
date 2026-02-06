@@ -2,14 +2,16 @@ import { Category } from 'src/modules/category/entity/category.entity';
 import { SubCategory } from 'src/modules/sub-category/entity/sub-category.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   Index,
   ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { Attachment } from '../../attachments/entity/attachment.entity';
 
 export enum ContentStatus {
   DRAFT = 'draft',
@@ -72,4 +74,7 @@ export class Content {
 
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
   subCategory: SubCategory;
+
+  @OneToMany(() => Attachment, (attachment) => attachment.content)
+  attachments: Attachment[];
 }

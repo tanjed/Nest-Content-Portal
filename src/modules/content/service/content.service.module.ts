@@ -8,7 +8,7 @@ import { ContentRepository } from "../repository/content.repository";
 
 @Module({
     imports:[
-        TypeOrmModule.forFeature([Content])
+        TypeOrmModule.forFeature([Content]),
     ],
     providers:[
         ContentRepository,

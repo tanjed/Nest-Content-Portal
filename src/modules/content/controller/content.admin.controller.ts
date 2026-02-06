@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Inject, NotFoundException, Param, Post, Put, Query, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, NotFoundException, Param, Post, Put, Query, UploadedFiles, UseInterceptors, UsePipes } from '@nestjs/common';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { SlugGeneratorPipe } from '../pipe/slug.generator.pipe';
 import type { ContentServiceInterface } from '../service/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from '../service/content.service.interface';
 import { UpdateContentDto } from '../dto/update-content.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('admin/content')
@@ -25,9 +26,16 @@ export class ContentAdminController {
   }
 
   @Post()
+  @UseInterceptors(
+    FilesInterceptor('attachments', 2, {
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB
+      }
+    })
+  )
   @UsePipes(SlugGeneratorPipe)
-  async create(@Body() createContentDto: CreateContentDto) {
-    return this.contentService.create(createContentDto);
+  async create(@Body() createContentDto: CreateContentDto, @UploadedFiles() files: Express.Multer.File[]) {
+    return this.contentService.create(createContentDto, files);
   }
 
   @Put(':id')
