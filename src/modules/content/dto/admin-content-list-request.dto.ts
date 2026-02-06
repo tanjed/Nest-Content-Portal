@@ -1,7 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import { IsDateString, IsIn, IsInt, IsNotEmpty, IsOptional, IsPositive, IsString, Min, ValidateNested } from 'class-validator';
-import { PaginationOptions } from 'src/shared/dto/pagination-options.dto';
-import { IsAfter } from 'src/shared/validation/is-after.decorator';
+import { PaginationOptions } from '../../../../shared/dto/pagination-options.dto';
+import { IsAfter } from '../../../../shared/validation/is-after.decorator';
 
 class  DateRangeDto {
   @Expose({name: 'start_date'})

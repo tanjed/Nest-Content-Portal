@@ -5,9 +5,9 @@ import { SUB_CATEGORY_SERVICE_INTERFACE } from './sub-category.service.interface
 import { SubCategoryService } from './sub-category.service';
 import { SUB_CATEGORY_REPOSITORY_INTERFACE } from '../repository/sub-category.repository.interface';
 import { SubCategoryRepository } from '../repository/sub-category.repository';
-import { CATEGORY_REPOSITORY_INTERFACE } from 'src/modules/category/repository/category.repository';
-import { CategoryRepository } from 'src/modules/category/repository/category.repository';
-import { CategoryServiceModule } from 'src/modules/category/service/category.service.module';
+import { CATEGORY_REPOSITORY_INTERFACE } from '../../../category/repository/category.repository';
+import { CategoryRepository } from '../../../category/repository/category.repository';
+import { CategoryServiceModule } from '../../../category/service/category.service.module';
 
 @Module({
   imports: [CategoryServiceModule, TypeOrmModule.forFeature([SubCategory])],

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import dayjs from "dayjs";
-import { BaseRepository } from "src/shared/base/base.abstract.interface";
-import { PaginatedResult } from "src/shared/dto/pagination-options.dto";
+import { BaseRepository } from "../../../../shared/base/base.abstract.interface";
+import { PaginatedResult } from "../../../../shared/dto/pagination-options.dto";
 import { Between, Repository } from "typeorm";
 import { QueryRunner } from "typeorm/browser";
 import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dto";

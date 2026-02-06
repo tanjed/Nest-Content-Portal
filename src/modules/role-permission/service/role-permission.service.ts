@@ -1,12 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Role } from '../entity/role.entity';
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from '../../../user/entities/user.entity';
 import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
 import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
-import { USER_REPOSITORY_INTERFACE } from 'src/modules/user/repository/user.repository.interface';
+import { USER_REPOSITORY_INTERFACE } from '../../../user/repository/user.repository.interface';
 import type { RoleRepositoryInterface } from '../repository/role.repository.interface';
 import type { PermissionRepositoryInterface } from '../repository/permission.repository.interface';
-import type { UserRepositoryInterface } from 'src/modules/user/repository/user.repository.interface';
+import type { UserRepositoryInterface } from '../../../user/repository/user.repository.interface';
 import type { RolePermissionServiceInterface } from './role-permission.service.interface';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { AssignRoleDto } from '../dto/assign-role.dto';

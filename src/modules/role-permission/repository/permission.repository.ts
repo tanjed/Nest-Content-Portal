@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseRepository } from 'src/shared/base/base.abstract.interface';
+import { BaseRepository } from '../../../../shared/base/base.abstract.interface';
 import { FindOptionsRelations, FindOptionsSelect, In, Repository } from 'typeorm';
 import { Permission } from '../entity/permission.entity';
 import { PermissionRepositoryInterface } from './permission.repository.interface';

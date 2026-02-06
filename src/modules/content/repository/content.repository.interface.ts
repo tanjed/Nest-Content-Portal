@@ -1,5 +1,5 @@
-import { BaseRepositoryInterface } from "src/shared/base/base.repository.interface";
-import { PaginatedResult } from "src/shared/dto/pagination-options.dto";
+import { BaseRepositoryInterface } from "../../../../shared/base/base.repository.interface";
+import { PaginatedResult } from "../../../../shared/dto/pagination-options.dto";
 import { QueryRunner } from "typeorm";
 import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dto";
 import { Content } from "../entities/content.entity";

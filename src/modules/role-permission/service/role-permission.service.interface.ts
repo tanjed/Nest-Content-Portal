@@ -1,4 +1,4 @@
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from '../../../user/entities/user.entity';
 import { Role } from '../entity/role.entity';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { AssignRoleDto } from '../dto/assign-role.dto';

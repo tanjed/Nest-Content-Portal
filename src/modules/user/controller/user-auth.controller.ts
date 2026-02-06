@@ -1,12 +1,12 @@
 import { Body, Controller, Inject, Post } from "@nestjs/common";
-import type { JwtServiceInterface } from "src/shared/jwt/jwt.service.interface";
-import { JWT_SERVICE_INTERFACE } from "src/shared/jwt/jwt.service.interface";
+import type { JwtServiceInterface } from "../../../../shared/jwt/jwt.service.interface";
+import { JWT_SERVICE_INTERFACE } from "../../../../shared/jwt/jwt.service.interface";
 import { AdminLoginDto } from "../dto/admin-login.dto";
 import { CreateUserDto } from "../dto/create-user.dto";
 import type { UserServiceInterface } from "../service/user.service.interface";
 import { USER_SERVICE_INTERFACE } from "../service/user.service.interface";
-import { ROLE_PERMISSION_SERVICE_INTERFACE } from "src/modules/role-permission/service/role-permission.service.interface";
-import type { RolePermissionServiceInterface } from "src/modules/role-permission/service/role-permission.service.interface";
+import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../../role-permission/service/role-permission.service.interface";
+import type { RolePermissionServiceInterface } from "../../../role-permission/service/role-permission.service.interface";
 
 @Controller()
 export class UserAuthController {
