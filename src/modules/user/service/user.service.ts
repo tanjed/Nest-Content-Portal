@@ -39,6 +39,10 @@ export class UserService implements UserServiceInterface {
         });
     }
 
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findByEmail(email);
+    }
+
     async authenticateUser(email: string, password: string): Promise<User> {
         const user = await this.userRepository.findByEmail(email, { roles: true });
 

@@ -11,7 +11,7 @@ export class JwtService implements JwtServiceInterface {
         this.jwtService = new NestJwtService({
             secret: this.config.get<string>('JWT_SECRET') || 'default-secret-key',
             signOptions: {
-                expiresIn: this.config.get<string>('JWT_EXPIRES_IN') || '1d',
+                expiresIn: (this.config.get<string>('JWT_EXPIRES_IN') || '1d') as any,
             },
         });
     }

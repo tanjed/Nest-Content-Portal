@@ -61,6 +61,10 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         await this.roleRepository.update(roleId, { permissions: permissions as any });
     }
 
+    async findRolesByIds(ids: string[]): Promise<Role[]> {
+        return this.roleRepository.findByIds(ids);
+    }
+
     async assignRoleToUser(data: AssignRoleDto): Promise<User> {
         const user = await this.userRepository.find(data.userId, { roles: true });
         if (!user) {

@@ -9,8 +9,8 @@ import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
 import { RoleRepository } from '../repository/role.repository';
 import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
 import { PermissionRepository } from '../repository/permission.repository';
-import { USER_REPOSITORY_INTERFACE } from 'src/modules/user/repository/user.repository';
 import { UserRepository } from 'src/modules/user/repository/user.repository';
+import { USER_REPOSITORY_INTERFACE } from 'src/modules/user/repository/user.repository.interface';
 
 @Module({
     imports: [
