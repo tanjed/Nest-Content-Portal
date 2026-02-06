@@ -19,6 +19,6 @@ import { CategoryRepository } from '../repository/category.repository';
       useExisting: CategoryRepository,
     },
   ],
-  exports: [CATEGORY_SERVICE_INTERFACE, TypeOrmModule],
+  exports: [CATEGORY_SERVICE_INTERFACE],
 })
 export class CategoryServiceModule {}

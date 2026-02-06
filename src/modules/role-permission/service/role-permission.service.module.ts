@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Role } from '../entity/role.entity';
-import { Permission } from '../entity/permission.entity';
 import { User } from 'src/modules/user/entities/user.entity';
-import { ROLE_PERMISSION_SERVICE_INTERFACE } from './role-permission.service.interface';
+import { UserModule } from 'src/modules/user/user.module';
+import { Permission } from '../entity/permission.entity';
+import { Role } from '../entity/role.entity';
+import { PERMISSION_REPOSITORY_INTERFACE, PermissionRepository } from '../repository/permission.repository';
+import { ROLE_REPOSITORY_INTERFACE, RoleRepository } from '../repository/role.repository';
 import { RolePermissionService } from './role-permission.service';
-import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
-import { RoleRepository } from '../repository/role.repository';
-import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
-import { PermissionRepository } from '../repository/permission.repository';
-import { UserRepository } from 'src/modules/user/repository/user.repository';
-import { USER_REPOSITORY_INTERFACE } from 'src/modules/user/repository/user.repository.interface';
+import { ROLE_PERMISSION_SERVICE_INTERFACE } from './role-permission.service.interface';
+import { UserServiceModule } from 'src/modules/user/service/user.service.module';
 
 @Module({
     imports: [
+        UserServiceModule,
         TypeOrmModule.forFeature([Role, Permission, User]),
     ],
     providers: [
@@ -27,16 +26,11 @@ import { USER_REPOSITORY_INTERFACE } from 'src/modules/user/repository/user.repo
             provide: PERMISSION_REPOSITORY_INTERFACE,
             useExisting: PermissionRepository,
         },
-        UserRepository,
-        {
-            provide: USER_REPOSITORY_INTERFACE,
-            useExisting: UserRepository,
-        },
         {
             provide: ROLE_PERMISSION_SERVICE_INTERFACE,
             useClass: RolePermissionService,
         },
     ],
-    exports: [ROLE_PERMISSION_SERVICE_INTERFACE],
+    exports: [ROLE_PERMISSION_SERVICE_INTERFACE, PERMISSION_REPOSITORY_INTERFACE],
 })
 export class RolePermissionServiceModule {}

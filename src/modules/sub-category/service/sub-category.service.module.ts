@@ -7,9 +7,10 @@ import { SUB_CATEGORY_REPOSITORY_INTERFACE } from '../repository/sub-category.re
 import { SubCategoryRepository } from '../repository/sub-category.repository';
 import { CATEGORY_REPOSITORY_INTERFACE } from 'src/modules/category/repository/category.repository';
 import { CategoryRepository } from 'src/modules/category/repository/category.repository';
+import { CategoryServiceModule } from 'src/modules/category/service/category.service.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SubCategory])],
+  imports: [CategoryServiceModule, TypeOrmModule.forFeature([SubCategory])],
   providers: [
     SubCategoryRepository,
     {
@@ -20,11 +21,7 @@ import { CategoryRepository } from 'src/modules/category/repository/category.rep
       provide: SUB_CATEGORY_REPOSITORY_INTERFACE,
       useExisting: SubCategoryRepository,
     },
-    {
-      provide: CATEGORY_REPOSITORY_INTERFACE,
-      useClass: CategoryRepository,
-    },
   ],
-  exports: [SUB_CATEGORY_SERVICE_INTERFACE, TypeOrmModule],
+  exports: [SUB_CATEGORY_SERVICE_INTERFACE],
 })
 export class SubCategoryServiceModule {}

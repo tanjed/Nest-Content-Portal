@@ -21,9 +21,6 @@ import { ContentRepository } from "../repository/content.repository";
             useExisting:  ContentRepository
         }
     ],
-    exports:[
-        CONTENT_SERVICE_INTERFACE,
-        TypeOrmModule,
-    ]
+    exports:[CONTENT_SERVICE_INTERFACE]
 })
 export class ContentServiceModule{}

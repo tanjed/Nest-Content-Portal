@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { Content } from "src/modules/content/entities/content.entity";
-import { Role } from "src/modules/role-permission/entity/role.entity";
+import { Content } from "../../content/entities/content.entity";
+import { Role } from "../../role-permission/entity/role.entity";
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum UserStatus {

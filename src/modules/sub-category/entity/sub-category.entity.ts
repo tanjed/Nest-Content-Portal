@@ -1,5 +1,5 @@
-import { Category } from "src/modules/category/entity/category.entity";
-import { Content } from "src/modules/content/entities/content.entity";
+import { Category } from "../../category/entity/category.entity";
+import { Content } from "../../content/entities/content.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('sub_categories')

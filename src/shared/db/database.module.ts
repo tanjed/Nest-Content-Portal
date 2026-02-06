@@ -2,9 +2,6 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { SeederService } from "./seeder.service";
-import { PermissionSeeder } from "./seeder/permission.seeder";
-import { RolePermissionSeeder } from "./seeder/role.seeder";
-import { UserSeeder } from "./seeder/user.seeder";
 
 @Module({
     imports: [
@@ -37,12 +34,8 @@ import { UserSeeder } from "./seeder/user.seeder";
             }),
         }),
     ],
-    providers: [
-        SeederService,
-        PermissionSeeder,
-        RolePermissionSeeder,
-        UserSeeder,
-    ],
+    providers: [],
+    exports: [SeederService],
 })
 
 export class DatabaseModule {}

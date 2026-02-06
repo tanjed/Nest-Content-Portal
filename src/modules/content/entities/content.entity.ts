@@ -1,6 +1,6 @@
-import { Category } from 'src/modules/category/entity/category.entity';
-import { SubCategory } from 'src/modules/sub-category/entity/sub-category.entity';
-import { User } from 'src/modules/user/entities/user.entity';
+import { Category } from '../../category/entity/category.entity';
+import { SubCategory } from '../../sub-category/entity/sub-category.entity';
+import { User } from '../../user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
