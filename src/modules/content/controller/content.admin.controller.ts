@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, NotFoundException, Post, Put, Query, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, NotFoundException, Param, Post, Put, Query, UsePipes } from '@nestjs/common';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { SlugGeneratorPipe } from '../pipe/slug.generator.pipe';
@@ -15,7 +15,7 @@ export class ContentAdminController {
   ){}
 
   @Get(':id')
-  async getPostById(id: string) {
+  async getPostById(@Param('id') id: string) {
     return await this.contentService.find(id);
   }
 
@@ -31,12 +31,12 @@ export class ContentAdminController {
   }
 
   @Put(':id')
-  async update(id: string, updateContentDto: UpdateContentDto) {
+  async update(@Param('id') id: string, updateContentDto: UpdateContentDto) {
     return this.contentService.update(id, updateContentDto);
   }
 
   @Delete(':id')
-  async delete(id: string) {
+  async delete(@Param('id') id: string) {
     return this.contentService.delete(id);
   }
 }

@@ -10,6 +10,9 @@ export class Category {
     @Column({name: 'name', type: 'varchar', length: 100, unique: true})
     name: string;
 
+    @Column({name: 'slug', type: 'varchar', length: 100, unique: true})
+    slug: string;
+
     @Column({name: 'description', type: 'text', nullable: true})
     description?: string;
 
