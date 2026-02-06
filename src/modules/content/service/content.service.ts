@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
-import { PaginatedResult } from 'src/shared/dto/pagination-options.dto';
+import { PaginatedResponseDto } from '../../../shared/dto/paginated-response.dto';
 import { DeepPartial, QueryRunner } from 'typeorm';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
@@ -9,8 +9,8 @@ import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { ContentServiceInterface } from './content.service.interface';
-import type { AttachmentServiceInterface } from 'src/modules/attachments/service/attachment.service.interface';
-import { ATTACHMENT_SERVICE_INTERFACE } from 'src/modules/attachments/service/attachment.service.interface';
+import type { AttachmentServiceInterface } from '../../attachments/service/attachment.service.interface';
+import { ATTACHMENT_SERVICE_INTERFACE } from '../../attachments/service/attachment.service.interface';
 
 @Injectable()
 export class ContentService implements ContentServiceInterface {
@@ -36,7 +36,7 @@ export class ContentService implements ContentServiceInterface {
     return content;
   }
 
-  async findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResult<Content>> {
+  async findAllPaginated(dto: AdminContentListRequestDto): Promise<PaginatedResponseDto<Content>> {
     return this.contentRepository.findPaginated({
       page: dto.page,
       limit: dto.limit,
