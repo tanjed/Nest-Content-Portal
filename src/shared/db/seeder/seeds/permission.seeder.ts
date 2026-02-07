@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ALL_PERMISSIONS } from "../../../modules/role-permission/constants/permissions";
-import { PERMISSION_REPOSITORY_INTERFACE } from "../../../modules/role-permission/repository/permission.repository";
-import type { PermissionRepositoryInterface } from "../../../modules/role-permission/repository/permission.repository.interface";
-import { Seeder } from "./core/decorator";
-import { SeederInterface } from "./core/seeder.interface";
+import { ALL_PERMISSIONS } from "../../../../modules/role-permission/constants/permissions";
+import { PERMISSION_REPOSITORY_INTERFACE } from "../../../../modules/role-permission/repository/permission.repository";
+import type { PermissionRepositoryInterface } from "../../../../modules/role-permission/repository/permission.repository.interface";
+import { Seeder } from "../core/decorator";
+import { SeederInterface } from "../core/seeder.interface";
 
 @Seeder({priority: 0})
 @Injectable()

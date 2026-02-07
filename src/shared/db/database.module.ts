@@ -1,12 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { SeederService } from "./seeder.service";
 import { DiscoveryModule } from "@nestjs/core";
-
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { SeederModule } from "./seeder/seeder.module";
 @Module({
     imports: [
-        DiscoveryModule,
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -35,9 +33,11 @@ import { DiscoveryModule } from "@nestjs/core";
                 logging: configService.get('APP_ENV') === 'development',
             }),
         }),
+        DiscoveryModule,
+        SeederModule,
     ],
-    providers: [SeederService],
-    exports: [SeederService],
+    providers: [],
+    exports: [],
 })
 
 export class DatabaseModule {}

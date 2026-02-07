@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { DiscoveryService, Reflector } from "@nestjs/core";
-import { IS_SEEDER_KEY, SeederOptions } from "./seeder/core/decorator";
-import { SeederInterface } from "./seeder/core/seeder.interface";
+import { IS_SEEDER_KEY, SeederOptions } from "./core/decorator";
+import { SeederInterface } from "./core/seeder.interface";
 
 @Injectable()
 export class SeederService {
@@ -11,8 +11,10 @@ export class SeederService {
     ) {}
 
 
-    async run() {
+    async run() { 
         const providers = this.discoveryService.getProviders({metadataKey: IS_SEEDER_KEY});
+        console.log(providers);
+        
 
         const seeders = providers
         .filter((wrapper) => {
@@ -28,7 +30,8 @@ export class SeederService {
             };
         })
         .sort((a, b) => a.priority - b.priority);
-
+        console.log(seeders);
+        
         for (const seeder of seeders) {
             console.log(`Running seeder: ${seeder.constructor.name}`);
             await seeder.instance.seed();

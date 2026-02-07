@@ -10,6 +10,7 @@ import { ApiResponseInterceptor } from './shared/interceptors/response.intercept
 import { SharedModule } from './shared/shared.module';
 import { CategoryModule } from './modules/category/category.module';
 import { RolePermissionModule } from './modules/role-permission/role-permission.module';
+import { ConfigModule } from '@nestjs/config';
 
 export const STORAGE_PATH = './storage';
 export const TEMP_PATH = './tmp';
@@ -22,6 +23,10 @@ export const TEMP_PATH = './tmp';
          cb(null, `${Date.now()}-${file.originalname}`);
         },
       }
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env`,
     }),
     DatabaseModule,
     SharedModule,

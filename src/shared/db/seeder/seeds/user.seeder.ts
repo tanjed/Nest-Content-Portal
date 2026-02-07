@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { DEFAULT_ROLE } from "../../../modules/role-permission/role-permission.module";
-import type { UserServiceInterface } from "../../../modules/user/service/user.service.interface";
-import { USER_SERVICE_INTERFACE } from "../../../modules/user/service/user.service.interface";
-import { Seeder } from "./core/decorator";
-import { SeederInterface } from "./core/seeder.interface";
+import { DEFAULT_ROLE } from "../../../../modules/role-permission/role-permission.module";
+import type { UserServiceInterface } from "../../../../modules/user/service/user.service.interface";
+import { USER_SERVICE_INTERFACE } from "../../../../modules/user/service/user.service.interface";
+import { Seeder } from ".././core/decorator";
+import { SeederInterface } from ".././core/seeder.interface";
 
 @Seeder({priority: 2})
 @Injectable()

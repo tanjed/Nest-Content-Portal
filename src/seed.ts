@@ -1,13 +1,13 @@
 import { NestFactory } from '@nestjs/core';
-import { SeederService } from './shared/db/seeder.service';
-import { AppModule } from './app.module';
+import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import dayjs from 'dayjs';
+import { DatabaseModule } from './shared/db/database.module';
+import { SeederService } from './shared/db/seeder/seeder.service';
 async function bootstrap() {
   dayjs.extend(utc)
   dayjs.extend(timezone)
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(DatabaseModule);
   await app.init();
 
   const seederService = app.get(SeederService);
