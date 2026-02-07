@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseRepository } from '../../../shared/base/base.abstract.interface';
 import { FindOptionsRelations, FindOptionsSelect, In, Repository } from 'typeorm';
@@ -6,6 +7,7 @@ import { RoleRepositoryInterface } from './role.repository.interface';
 
 export const ROLE_REPOSITORY_INTERFACE = Symbol('ROLE_REPOSITORY_INTERFACE');
 
+@Injectable()
 export class RoleRepository extends BaseRepository<Role> implements RoleRepositoryInterface {
     constructor(
         @InjectRepository(Role)

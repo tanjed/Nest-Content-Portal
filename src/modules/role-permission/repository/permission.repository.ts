@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseRepository } from '../../../shared/base/base.abstract.interface';
 import { FindOptionsRelations, FindOptionsSelect, In, Repository } from 'typeorm';
@@ -6,6 +7,7 @@ import { PermissionRepositoryInterface } from './permission.repository.interface
 
 export const PERMISSION_REPOSITORY_INTERFACE = Symbol('PERMISSION_REPOSITORY_INTERFACE');
 
+@Injectable()
 export class PermissionRepository extends BaseRepository<Permission> implements PermissionRepositoryInterface {
     constructor(
         @InjectRepository(Permission)
