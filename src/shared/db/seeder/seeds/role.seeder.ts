@@ -5,10 +5,10 @@ import type { RolePermissionServiceInterface } from "../../../../modules/role-pe
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../../../modules/role-permission/service/role-permission.service.interface";
 import { SeederInterface } from ".././core/seeder.interface";
 import { Seeder } from ".././core/decorator";
-import { PERMISSION_REPOSITORY_INTERFACE } from "../../../../modules/role-permission/repository/permission.repository.interface";
+import { PERMISSION_REPOSITORY_INTERFACE } from "../../../../modules/role-permission/repository/permission.repository";
 import type { PermissionRepositoryInterface } from "../../../../modules/role-permission/repository/permission.repository.interface";
 
-@Seeder({priority: 1})
+@Seeder({ priority: 1 })
 @Injectable()
 export class RolePermissionSeeder implements SeederInterface {
     constructor(
@@ -16,7 +16,7 @@ export class RolePermissionSeeder implements SeederInterface {
         private readonly rolePermissionService: RolePermissionServiceInterface,
         @Inject(PERMISSION_REPOSITORY_INTERFACE)
         private readonly permissionRepository: PermissionRepositoryInterface,
-    ) {}
+    ) { }
 
     async seed() {
         let createdPermissions = await this.permissionRepository.findAll().then(perms => perms.map(p => p.name));
@@ -24,16 +24,16 @@ export class RolePermissionSeeder implements SeederInterface {
         permissions = permissions.filter((p) => !createdPermissions.includes(p));
 
         const roles = [
-           {
+            {
                 name: DEFAULT_ROLE,
                 permissions: permissions,
-           }
+            }
         ];
 
         for (const role of roles) {
             const exists = await this.rolePermissionService.getRoleByName(role.name);
             if (!exists) {
-                await this.rolePermissionService.createRole({name: role.name, permissions: role.permissions});
+                await this.rolePermissionService.createRole({ name: role.name, permissions: role.permissions });
                 console.log(`Seeded role: ${role.name}`);
             } else {
                 await this.rolePermissionService.syncRolePermissions(exists.id, role.permissions);
