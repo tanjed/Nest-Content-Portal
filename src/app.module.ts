@@ -8,6 +8,7 @@ import { DatabaseModule } from './shared/db/database.module';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
 import { ApiResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { CategoryModule } from './modules/category/category.module';
 
 export const STORAGE_PATH = './storage';
 export const TEMP_PATH = './tmp';
@@ -26,6 +27,7 @@ export const TEMP_PATH = './tmp';
     QueueModule,
     ContentModule,
     UserModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [

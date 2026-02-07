@@ -24,16 +24,16 @@ export class User {
     @Column({name:'password', type:'varchar', length: 100})
     password:string;
 
-    @Column({name:'status', type:'tinyint', default: UserStatus.ACTIVE})
+    @Column({name:'status', type:'smallint', default: UserStatus.ACTIVE})
     status: UserStatus;
 
     @Column({name:'profile_img', type:"text", nullable: true})
     profileImage: string;
 
-    @CreateDateColumn({name:'created_at', type:'datetime'})
+    @CreateDateColumn({name:'created_at', type:'timestamp'})
     createdAt:Date;
 
-    @UpdateDateColumn({name:'updated_at', type:'datetime'})
+    @UpdateDateColumn({name:'updated_at', type:'timestamp'})
     updatedAt:Date;
 
     @OneToMany(() => Content, (content) => content.author)
