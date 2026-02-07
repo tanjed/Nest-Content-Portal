@@ -1,9 +1,12 @@
-import { Controller } from '@nestjs/common';
-import { UserService } from '../service/user.service';
+import { Controller, Inject } from '@nestjs/common';
+import { USER_SERVICE_INTERFACE, UserServiceInterface } from '../service/user.service.interface';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject(USER_SERVICE_INTERFACE)
+    private readonly userService: UserServiceInterface
+  ) {}
   getUser(){}
   updateUser(){}
   deleteUser(){}

@@ -2,6 +2,7 @@ import { Inject, Injectable, NotFoundException, UnauthorizedException, Unprocess
 import { ROLE_PERMISSION_SERVICE_INTERFACE, type RolePermissionServiceInterface } from '../../role-permission/service/role-permission.service.interface';
 import { TransactionService } from '../../../shared/db/transaction.service';
 import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { User, UserStatus } from '../entities/user.entity';
 import { USER_REPOSITORY_INTERFACE, type UserRepositoryInterface } from '../repository/user.repository.interface';
 import type { UserServiceInterface } from './user.service.interface';
@@ -42,6 +43,48 @@ export class UserService implements UserServiceInterface {
 
     async findByEmail(email: string): Promise<User | null> {
         return this.userRepository.findByEmail(email);
+    }
+
+    async findById(id: string, relations?: Record<string, boolean>): Promise<User | null> {
+        return this.userRepository.find(id, relations);
+    }
+
+    async update(id: string, data: UpdateUserDto): Promise<User> {
+        const user = await this.userRepository.find(id);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        if (data.email && data.email !== user.email) {
+            const existingUser = await this.userRepository.findByEmail(data.email);
+            if (existingUser) {
+                throw new UnprocessableEntityException('Email already exists');
+            }
+        }
+
+        let roles;
+        if (data.roles) {
+            roles = await this.rolePermissionService.findRolesByIds(data.roles);
+            if (roles.length !== data.roles.length) {
+                throw new NotFoundException('One or more roles not found');
+            }
+        }
+
+        return this.transactionService.execute(async (queryRunner) => {
+            const userData: Partial<User> = {};
+            if (data.name !== undefined) userData.full_name = data.name;
+            if (data.email !== undefined) userData.email = data.email;
+            if (data.password !== undefined) userData.password = data.password;
+            if (data.status !== undefined) userData.status = data.status;
+            if (data.profileImage !== undefined) userData.profileImage = data.profileImage;
+            if (roles !== undefined) userData.roles = roles;
+
+            const updated = await this.userRepository.update(id, userData, queryRunner);
+            if (!updated) {
+                throw new NotFoundException('User not found');
+            }
+            return updated;
+        });
     }
 
     async authenticateUser(email: string, password: string): Promise<User> {

@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { USER_SERVICE_INTERFACE, UserServiceInterface } from '../../../modules/user/service/user.service.interface';
 import { User } from '../../user/entities/user.entity';
 import { AssignRoleDto } from '../dto/assign-role.dto';
@@ -17,7 +17,7 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         private readonly roleRepository: RoleRepositoryInterface,
         @Inject(PERMISSION_REPOSITORY_INTERFACE)
         private readonly permissionRepository: PermissionRepositoryInterface,
-        @Inject(USER_SERVICE_INTERFACE)
+        @Inject(forwardRef(() => USER_SERVICE_INTERFACE))
         private readonly userService: UserServiceInterface,
     ) {}
 
@@ -65,7 +65,7 @@ export class RolePermissionService implements RolePermissionServiceInterface {
     }
 
     async assignRoleToUser(data: AssignRoleDto): Promise<User> {
-        const user = await this.userService.find(data.userId, { roles: true });
+        const user = await this.userService.findById(data.userId, { roles: true });
         if (!user) {
             throw new NotFoundException('User not found');
         }
@@ -82,6 +82,6 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         await this.userService.update(data.userId, { roles: roles as any });
 
         // Return updated user with roles
-        return this.userService.find(data.userId, { roles: true }) as Promise<User>;
+        return this.userService.findById(data.userId, { roles: true }) as Promise<User>;
     }
 }
