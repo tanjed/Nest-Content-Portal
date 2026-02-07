@@ -5,7 +5,7 @@ import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
 import { ListCategoryDto } from '../dto/list-category.dto';
 import type { CategoryRepositoryInterface } from '../repository/category.repository.interface';
-import { CATEGORY_REPOSITORY_INTERFACE } from '../repository/category.repository';
+import { CATEGORY_REPOSITORY_INTERFACE } from '../repository/category.repository.interface';
 import type { CategoryServiceInterface } from './category.service.interface';
 
 @Injectable()

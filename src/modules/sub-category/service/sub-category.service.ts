@@ -6,8 +6,7 @@ import { UpdateSubCategoryDto } from '../dto/update-sub-category.dto';
 import { ListSubCategoryDto } from '../dto/list-sub-category.dto';
 import type { SubCategoryRepositoryInterface } from '../repository/sub-category.repository.interface';
 import { SUB_CATEGORY_REPOSITORY_INTERFACE } from '../repository/sub-category.repository';
-import { CATEGORY_REPOSITORY_INTERFACE } from '../../category/repository/category.repository';
-import type { CategoryRepositoryInterface } from '../../category/repository/category.repository.interface';
+import { CATEGORY_REPOSITORY_INTERFACE, type CategoryRepositoryInterface } from '../../category/repository/category.repository.interface';
 import type { SubCategoryServiceInterface } from './sub-category.service.interface';
 
 @Injectable()

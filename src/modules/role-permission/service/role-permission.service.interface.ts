@@ -1,5 +1,6 @@
 import { User } from '../../user/entities/user.entity';
 import { Role } from '../entity/role.entity';
+import { Permission } from '../entity/permission.entity';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { AssignRoleDto } from '../dto/assign-role.dto';
 
@@ -11,4 +12,7 @@ export interface RolePermissionServiceInterface {
     createRole(data: CreateRoleDto): Promise<Role>;
     assignRoleToUser(data: AssignRoleDto): Promise<User>;
     syncRolePermissions(roleId: string, permissionNames: string[]): Promise<void>;
+    getRoles(): Promise<Role[]>;
+    getPermissions(): Promise<Permission[]>;
+    getRoleById(id: string): Promise<Role | null>;
 }

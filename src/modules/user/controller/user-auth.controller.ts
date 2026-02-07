@@ -8,7 +8,7 @@ import { USER_SERVICE_INTERFACE } from "../service/user.service.interface";
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../role-permission/service/role-permission.service.interface";
 import type { RolePermissionServiceInterface } from "../../role-permission/service/role-permission.service.interface";
 
-@Controller()
+@Controller('admin/auth')
 export class UserAuthController {
     constructor(
         @Inject(USER_SERVICE_INTERFACE)
@@ -19,7 +19,7 @@ export class UserAuthController {
         private readonly rolePermissionService: RolePermissionServiceInterface,
     ) {}
 
-    @Post('admin/register')
+    @Post('register')
     async createUser(@Body() body: CreateUserDto) {
         const user = await this.userService.createUser(body);
 
@@ -30,7 +30,7 @@ export class UserAuthController {
         };
     }
 
-    @Post('admin/login')
+    @Post('login')
     async login(@Body() body: AdminLoginDto) {
         const user = await this.userService.authenticateUser(body.email, body.password);
 

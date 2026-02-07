@@ -4,6 +4,7 @@ import { User } from '../../user/entities/user.entity';
 import { AssignRoleDto } from '../dto/assign-role.dto';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { Role } from '../entity/role.entity';
+import { Permission } from '../entity/permission.entity';
 import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
 import type { PermissionRepositoryInterface } from '../repository/permission.repository.interface';
 import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
@@ -83,5 +84,17 @@ export class RolePermissionService implements RolePermissionServiceInterface {
 
         // Return updated user with roles
         return this.userService.findById(data.userId, { roles: true }) as Promise<User>;
+    }
+
+    async getRoles(): Promise<Role[]> {
+        return this.roleRepository.findAll();
+    }
+
+    async getPermissions(): Promise<Permission[]> {
+        return this.permissionRepository.findAll();
+    }
+
+    async getRoleById(id: string): Promise<Role | null> {
+        return this.roleRepository.find(id, { permissions: true });
     }
 }

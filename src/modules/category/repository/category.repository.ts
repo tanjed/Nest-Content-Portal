@@ -1,12 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { Like, Repository } from 'typeorm';
 import { BaseRepository } from '../../../shared/base/base.abstract.interface';
 import { PaginatedResult } from '../../../shared/dto/pagination-options.dto';
-import { Like, Repository } from 'typeorm';
+import { ListCategoryDto } from '../dto/list-category.dto';
 import { Category } from '../entity/category.entity';
 import { CategoryRepositoryInterface } from './category.repository.interface';
-import { ListCategoryDto } from '../dto/list-category.dto';
-
-export const CATEGORY_REPOSITORY_INTERFACE = Symbol('CATEGORY_REPOSITORY_INTERFACE');
 
 export class CategoryRepository extends BaseRepository<Category> implements CategoryRepositoryInterface {
   constructor(
