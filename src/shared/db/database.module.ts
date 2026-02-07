@@ -2,9 +2,11 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { SeederService } from "./seeder.service";
+import { DiscoveryModule } from "@nestjs/core";
 
 @Module({
     imports: [
+        DiscoveryModule,
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -34,7 +36,7 @@ import { SeederService } from "./seeder.service";
             }),
         }),
     ],
-    providers: [],
+    providers: [SeederService],
     exports: [SeederService],
 })
 

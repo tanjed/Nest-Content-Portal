@@ -1,15 +1,14 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Role } from '../entity/role.entity';
-import { User } from '../../../user/entities/user.entity';
-import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
-import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
-import { USER_REPOSITORY_INTERFACE } from '../../../user/repository/user.repository.interface';
-import type { RoleRepositoryInterface } from '../repository/role.repository.interface';
-import type { PermissionRepositoryInterface } from '../repository/permission.repository.interface';
-import type { UserRepositoryInterface } from '../../../user/repository/user.repository.interface';
-import type { RolePermissionServiceInterface } from './role-permission.service.interface';
-import { CreateRoleDto } from '../dto/create-role.dto';
+import { USER_SERVICE_INTERFACE, UserServiceInterface } from '../../../modules/user/service/user.service.interface';
+import { User } from '../../user/entities/user.entity';
 import { AssignRoleDto } from '../dto/assign-role.dto';
+import { CreateRoleDto } from '../dto/create-role.dto';
+import { Role } from '../entity/role.entity';
+import { PERMISSION_REPOSITORY_INTERFACE } from '../repository/permission.repository';
+import type { PermissionRepositoryInterface } from '../repository/permission.repository.interface';
+import { ROLE_REPOSITORY_INTERFACE } from '../repository/role.repository';
+import type { RoleRepositoryInterface } from '../repository/role.repository.interface';
+import type { RolePermissionServiceInterface } from './role-permission.service.interface';
 
 @Injectable()
 export class RolePermissionService implements RolePermissionServiceInterface {
@@ -18,8 +17,8 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         private readonly roleRepository: RoleRepositoryInterface,
         @Inject(PERMISSION_REPOSITORY_INTERFACE)
         private readonly permissionRepository: PermissionRepositoryInterface,
-        @Inject(USER_REPOSITORY_INTERFACE)
-        private readonly userRepository: UserRepositoryInterface,
+        @Inject(USER_SERVICE_INTERFACE)
+        private readonly userService: UserServiceInterface,
     ) {}
 
     async getRoleByName(name: string): Promise<Role | null> {
@@ -66,7 +65,7 @@ export class RolePermissionService implements RolePermissionServiceInterface {
     }
 
     async assignRoleToUser(data: AssignRoleDto): Promise<User> {
-        const user = await this.userRepository.find(data.userId, { roles: true });
+        const user = await this.userService.find(data.userId, { roles: true });
         if (!user) {
             throw new NotFoundException('User not found');
         }
@@ -80,9 +79,9 @@ export class RolePermissionService implements RolePermissionServiceInterface {
 
         // Assign roles to user
         user.roles = roles as any;
-        await this.userRepository.update(data.userId, { roles: roles as any });
+        await this.userService.update(data.userId, { roles: roles as any });
 
         // Return updated user with roles
-        return this.userRepository.find(data.userId, { roles: true }) as Promise<User>;
+        return this.userService.find(data.userId, { roles: true }) as Promise<User>;
     }
 }

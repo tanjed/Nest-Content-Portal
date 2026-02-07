@@ -2,10 +2,12 @@ import { BullModule } from '@nestjs/bullmq';
 import { Global, Module } from "@nestjs/common";
 import { QUEUE_AVAILABLE } from './queue.list';
 import { AttachmentUploadProcessor } from './processors/attachment-upload.processor';
+import { AttachmentServiceModule } from '../../modules/attachments/service/attachment.service.module';
 
 @Global()
 @Module({
     imports: [
+        AttachmentServiceModule,
         BullModule.forRoot({
             connection: {
                 host: process.env.REDIS_HOST,
@@ -14,8 +16,6 @@ import { AttachmentUploadProcessor } from './processors/attachment-upload.proces
         }),
         BullModule.registerQueue(...Object.values(QUEUE_AVAILABLE).map(queueName => ({ name: queueName }))),
     ],
-    providers: [
-        AttachmentUploadProcessor,
-    ],
+    providers: [AttachmentUploadProcessor],
 })
 export class QueueModule {}

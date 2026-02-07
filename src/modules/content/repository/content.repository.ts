@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import dayjs from "dayjs";
-import { BaseRepository } from "../../../../shared/base/base.abstract.interface";
-import { PaginatedResult } from "../../../../shared/dto/pagination-options.dto";
-import { Between, Repository } from "typeorm";
-import { QueryRunner } from "typeorm/browser";
+import { BaseRepository } from "../../../shared/base/base.abstract.interface";
+import { PaginatedResult } from "../../../shared/dto/pagination-options.dto";
+import { Between, Repository, QueryRunner } from "typeorm";
 import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dto";
 import { Content } from "../entities/content.entity";
 import { ContentRepositoryInterface } from "./content.repository.interface";
@@ -18,14 +17,14 @@ export class ContentRepository extends BaseRepository<Content> implements Conten
         super(repository)
     }
 
-    async findPaginated(request: AdminContentListRequestDto, queryRunner?: QueryRunner): Promise<PaginatedResult<Content>> {
+    async findPaginated(options: AdminContentListRequestDto, queryRunner?: QueryRunner): Promise<PaginatedResult<Content>> {
         const {
             page = 1,
             limit = 10,
             sortBy = 'publishedAt',
             sortOrder,
             dateRange,
-        } = request;
+        } = options;
 
         const repo = this.getRepository(this.repository, queryRunner);
         const skip = (page - 1) * limit;

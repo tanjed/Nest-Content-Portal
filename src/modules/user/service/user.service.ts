@@ -1,14 +1,15 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
-import { ROLE_PERMISSION_SERVICE_INTERFACE, type RolePermissionServiceInterface } from '../../../role-permission/service/role-permission.service.interface';
-import { TransactionService } from '../../../../shared/db/transaction.service';
+import { ROLE_PERMISSION_SERVICE_INTERFACE, type RolePermissionServiceInterface } from '../../role-permission/service/role-permission.service.interface';
+import { TransactionService } from '../../../shared/db/transaction.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User, UserStatus } from '../entities/user.entity';
-import type { UserRepositoryInterface } from '../repository/user.repository.interface';
+import { USER_REPOSITORY_INTERFACE, type UserRepositoryInterface } from '../repository/user.repository.interface';
 import type { UserServiceInterface } from './user.service.interface';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
     constructor(
+        @Inject(USER_REPOSITORY_INTERFACE)
         private readonly userRepository: UserRepositoryInterface,
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
