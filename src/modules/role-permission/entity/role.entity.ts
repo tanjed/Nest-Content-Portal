@@ -20,7 +20,7 @@ export class Role {
     updatedAt: Date;
 
     @ManyToMany(() => Permission, (permission) => permission.roles)
-    @JoinTable()
+    @JoinTable({name: 'role_permissions'})
     permissions: Permission[];
 
     @ManyToMany(() => User, (user) => user.roles)

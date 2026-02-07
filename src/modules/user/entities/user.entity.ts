@@ -40,7 +40,7 @@ export class User {
     contents:Content[];
 
     @ManyToMany(() => Role, (role) => role.users)
-    @JoinTable()
+    @JoinTable({name: 'user_roles'})
     roles: Role[];
 
     @BeforeInsert()
