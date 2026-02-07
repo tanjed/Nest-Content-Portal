@@ -1,13 +1,13 @@
 import { Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { PaginatedResult } from '../../../../shared/dto/pagination-options.dto';
+import { PaginatedResult } from '../../../shared/dto/pagination-options.dto';
 import { SubCategory } from '../entity/sub-category.entity';
 import { CreateSubCategoryDto } from '../dto/create-sub-category.dto';
 import { UpdateSubCategoryDto } from '../dto/update-sub-category.dto';
 import { ListSubCategoryDto } from '../dto/list-sub-category.dto';
 import type { SubCategoryRepositoryInterface } from '../repository/sub-category.repository.interface';
 import { SUB_CATEGORY_REPOSITORY_INTERFACE } from '../repository/sub-category.repository';
-import { CATEGORY_REPOSITORY_INTERFACE } from '../../../category/repository/category.repository';
-import type { CategoryRepositoryInterface } from '../../../category/repository/category.repository.interface';
+import { CATEGORY_REPOSITORY_INTERFACE } from '../../category/repository/category.repository';
+import type { CategoryRepositoryInterface } from '../../category/repository/category.repository.interface';
 import type { SubCategoryServiceInterface } from './sub-category.service.interface';
 
 @Injectable()

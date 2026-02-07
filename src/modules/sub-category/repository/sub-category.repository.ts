@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseRepository } from '../../../../shared/base/base.abstract.interface';
-import { PaginatedResult } from '../../../../shared/dto/pagination-options.dto';
+import { BaseRepository } from '../../../shared/base/base.abstract.interface';
+import { PaginatedResult } from '../../../shared/dto/pagination-options.dto';
 import { Like, Repository } from 'typeorm';
 import { SubCategory } from '../entity/sub-category.entity';
 import { SubCategoryRepositoryInterface } from './sub-category.repository.interface';
