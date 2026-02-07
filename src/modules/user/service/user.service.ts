@@ -6,6 +6,7 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { User, UserStatus } from '../entities/user.entity';
 import { USER_REPOSITORY_INTERFACE, type UserRepositoryInterface } from '../repository/user.repository.interface';
 import type { UserServiceInterface } from './user.service.interface';
+import { FindOptionsRelations } from 'typeorm';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
@@ -15,7 +16,7 @@ export class UserService implements UserServiceInterface {
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
         private readonly transactionService: TransactionService,
-    ){}
+    ) { }
 
     async createUser(data: CreateUserDto): Promise<User> {
         const user = await this.userRepository.findByEmail(data.email);
@@ -28,7 +29,7 @@ export class UserService implements UserServiceInterface {
         if (roles.length !== data.roles.length) {
             throw new NotFoundException('One or more roles not found');
         }
-        
+
         return this.transactionService.execute(async (queryRunner) => {
             const userData: Partial<User> = {
                 full_name: data.name,
@@ -36,7 +37,7 @@ export class UserService implements UserServiceInterface {
                 password: data.password,
                 roles: roles,
             };
-            
+
             return this.userRepository.create(userData, queryRunner);
         });
     }
@@ -45,7 +46,7 @@ export class UserService implements UserServiceInterface {
         return this.userRepository.findByEmail(email);
     }
 
-    async findById(id: string, relations?: Record<string, boolean>): Promise<User | null> {
+    async findById(id: string, relations?: FindOptionsRelations<User>): Promise<User | null> {
         return this.userRepository.find(id, relations);
     }
 
