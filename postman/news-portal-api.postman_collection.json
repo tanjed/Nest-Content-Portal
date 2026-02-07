@@ -1,0 +1,788 @@
+{
+    "info": {
+        "_postman_id": "news-portal-api-collection",
+        "name": "News Portal API",
+        "description": "API collection for News Portal backend - NestJS application",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"P@ssword123\",\n  \"roles\": [\"{{roleId}}\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/auth/register",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "auth",
+                                "register"
+                            ]
+                        },
+                        "description": "Register a new admin user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.token) {",
+                                    "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"p@ssword123#\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "auth",
+                                "login"
+                            ]
+                        },
+                        "description": "Login to get JWT token. Token is automatically saved to collection variable."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Categories",
+            "item": [
+                {
+                    "name": "List Categories",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/categories?page=1&limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "categories"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Get paginated list of categories"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Category by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "categories",
+                                "{{categoryId}}"
+                            ]
+                        },
+                        "description": "Get a single category by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Category",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Technology\",\n  \"slug\": \"technology\",\n  \"description\": \"Tech news and updates\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/categories",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "categories"
+                            ]
+                        },
+                        "description": "Create a new category"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Category",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Technology Updated\",\n  \"description\": \"Updated description\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "categories",
+                                "{{categoryId}}"
+                            ]
+                        },
+                        "description": "Update an existing category"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Category",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "categories",
+                                "{{categoryId}}"
+                            ]
+                        },
+                        "description": "Delete a category"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Sub-Categories",
+            "item": [
+                {
+                    "name": "List Sub-Categories",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/sub-categories?page=1&limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "sub-categories"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Get paginated list of sub-categories"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Sub-Category by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "sub-categories",
+                                "{{subCategoryId}}"
+                            ]
+                        },
+                        "description": "Get a single sub-category by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Sub-Category",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Mobile Apps\",\n  \"slug\": \"mobile-apps\",\n  \"categorySlug\": \"technology\",\n  \"description\": \"Mobile application news\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/sub-categories",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "sub-categories"
+                            ]
+                        },
+                        "description": "Create a new sub-category"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Sub-Category",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Mobile Apps Updated\",\n  \"description\": \"Updated description\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "sub-categories",
+                                "{{subCategoryId}}"
+                            ]
+                        },
+                        "description": "Update an existing sub-category"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Sub-Category",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "sub-categories",
+                                "{{subCategoryId}}"
+                            ]
+                        },
+                        "description": "Delete a sub-category"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Content",
+            "item": [
+                {
+                    "name": "List Content",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/content?page=1&limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "content"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        },
+                        "description": "Get paginated list of content"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Content by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "content",
+                                "{{contentId}}"
+                            ]
+                        },
+                        "description": "Get a single content by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Content",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "title",
+                                    "value": "Sample Article Title",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "body",
+                                    "value": "<p>This is the article body content...</p>",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "slug",
+                                    "value": "sample-article-title",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "authorId",
+                                    "value": "{{userId}}",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "categoryId",
+                                    "value": "{{categoryId}}",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "draft",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "thumbnail",
+                                    "value": "https://example.com/image.jpg",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "attachments",
+                                    "type": "file",
+                                    "src": [],
+                                    "description": "Upload up to 2 files (max 5MB each)"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/content",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "content"
+                            ]
+                        },
+                        "description": "Create new content with optional file attachments (max 2 files, 5MB each)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Content",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Updated Article Title\",\n  \"body\": \"<p>Updated content body...</p>\",\n  \"status\": \"published\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "content",
+                                "{{contentId}}"
+                            ]
+                        },
+                        "description": "Update existing content"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Content",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "content",
+                                "{{contentId}}"
+                            ]
+                        },
+                        "description": "Delete content"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Roles",
+            "item": [
+                {
+                    "name": "List Roles",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/roles",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "roles"
+                            ]
+                        },
+                        "description": "Get all roles"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Role by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/roles/{{roleId}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "roles",
+                                "{{roleId}}"
+                            ]
+                        },
+                        "description": "Get a single role by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Role",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Editor\",\n  \"description\": \"Content editor role\",\n  \"permissions\": [\"content:read\", \"content:write\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/roles",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "roles"
+                            ]
+                        },
+                        "description": "Create a new role with permissions"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Permissions",
+            "item": [
+                {
+                    "name": "List Permissions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/permissions",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "permissions"
+                            ]
+                        },
+                        "description": "Get all available permissions"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Role Permissions",
+            "item": [
+                {
+                    "name": "Sync Role Permissions",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"permissions\": [\"content:read\", \"content:write\", \"category:read\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/role-permissions/roles/{{roleId}}/permissions",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "role-permissions",
+                                "roles",
+                                "{{roleId}}",
+                                "permissions"
+                            ]
+                        },
+                        "description": "Sync permissions for a role (replaces existing permissions)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Assign Role to User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"roleIds\": [\"{{roleId}}\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/admin/role-permissions/users/assign",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "admin",
+                                "role-permissions",
+                                "users",
+                                "assign"
+                            ]
+                        },
+                        "description": "Assign roles to a user"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}

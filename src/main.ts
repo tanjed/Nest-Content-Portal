@@ -9,6 +9,13 @@ async function bootstrap() {
   dayjs.extend(timezone)
 
   const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    haders:['*'],
+    origin: ['http://localhost:3001'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true,
+  });
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

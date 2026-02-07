@@ -11,24 +11,25 @@ interface ApiResponse<T> {
 export class ApiResponseInterceptor<T> implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<T>): Observable<ApiResponse<T>> {
     const response = context.switchToHttp().getResponse();
-    const statusCode = response.statusCode;
+    return next.handle().pipe(map(
+      (data: any) => {
+        let message = 'Success';
+        if (data?.statusCode) {
+          response.status(data.statusCode);
+          delete data.statusCode;
+        }
 
-    return next.handle().pipe(
-      map((data) => ({
-        success: statusCode >= 200 && statusCode < 300,
-        message: this.getMessage(statusCode),
-        data: data,
-      })),
-    );
-  }
+        if (data?.message) {
+          message = data.message;
+          delete data.message;
+        }
 
-  private getMessage(statusCode: number): string {
-    switch (statusCode) {
-      case HttpStatus.OK: return 'Success';
-      case HttpStatus.CREATED: return 'Created successfully';
-      case HttpStatus.ACCEPTED: return 'Accepted';
-      case HttpStatus.NO_CONTENT: return 'Deleted successfully';
-      default: return 'Success';
-    }
+        return {
+          success: response.statusCode >= 200 && response.statusCode < 300,
+          message: message,
+          data,
+        };
+      }
+    ));
   }
 }

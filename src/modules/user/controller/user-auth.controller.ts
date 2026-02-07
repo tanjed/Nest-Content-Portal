@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, HttpStatus, Inject, Post } from "@nestjs/common";
 import type { JwtServiceInterface } from "../../../shared/jwt/jwt.service.interface";
 import { JWT_SERVICE_INTERFACE } from "../../../shared/jwt/jwt.service.interface";
 import { AdminLoginDto } from "../dto/admin-login.dto";
@@ -17,7 +17,7 @@ export class UserAuthController {
         private readonly jwtService: JwtServiceInterface,
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
-    ) {}
+    ) { }
 
     @Post('register')
     async createUser(@Body() body: CreateUserDto) {
@@ -43,6 +43,11 @@ export class UserAuthController {
             ) || [],
         });
 
-        return { token };
+        return {
+            statusCode: HttpStatus.OK,
+            message: 'Login successful',
+            expires_in: 43635645,
+            token: token,
+        };
     }
 }

@@ -34,9 +34,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else if (exception instanceof QueryFailedError) {
         message = 'Failed to execute the query'
     } else if(exception instanceof HttpException) {
-        message = exception.message
+        message = exception.message;
+        status = exception.getStatus();
     }
-
+    
     const responseBody: ErrorResponse = {
       success: false,
       message,
