@@ -7,8 +7,15 @@ import type { UserServiceInterface } from "../service/user.service.interface";
 import { USER_SERVICE_INTERFACE } from "../service/user.service.interface";
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../role-permission/service/role-permission.service.interface";
 import type { RolePermissionServiceInterface } from "../../role-permission/service/role-permission.service.interface";
+import { Can } from "../../../shared/decorator/permissions.decorator";
+import { PERMISSIONS } from "../../../modules/role-permission/constants/permissions";
+import { AuthenticateGuard } from "src/shared/guard/authenticate.guard";
+import { AuthorizeGuard } from "src/shared/guard/authorize.guard";
+import { UseGuards } from "@nestjs/common";
 
 @Controller('admin/auth')
+@UseGuards(AuthenticateGuard)
+@UseGuards(AuthorizeGuard)
 export class UserAuthController {
     constructor(
         @Inject(USER_SERVICE_INTERFACE)
@@ -20,6 +27,7 @@ export class UserAuthController {
     ) { }
 
     @Post('register')
+    @Can(PERMISSIONS.USER.CREATE)
     async createUser(@Body() body: CreateUserDto) {
         const user = await this.userService.createUser(body);
 
