@@ -12,6 +12,7 @@ import { PERMISSIONS } from "../../../modules/role-permission/constants/permissi
 import { AuthenticateGuard } from "src/shared/guard/authenticate.guard";
 import { AuthorizeGuard } from "src/shared/guard/authorize.guard";
 import { UseGuards } from "@nestjs/common";
+import { Public } from "@/shared/decorator/public-route.decorator";
 
 @Controller('admin/auth')
 @UseGuards(AuthenticateGuard)
@@ -39,6 +40,7 @@ export class UserAuthController {
     }
 
     @Post('login')
+    @Public()
     async login(@Body() body: AdminLoginDto) {
         const user = await this.userService.authenticateUser(body.email, body.password);
 

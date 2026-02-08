@@ -21,23 +21,25 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    console.log(exception);
+
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
     let errors: Record<string, string[]> | undefined;
 
     if (exception instanceof BadRequestException) {
-        const body = exception.getResponse() as any
-        errors = body.errors || null
-        message = body.message || 'Invalid Data'
-        status = HttpStatus.BAD_REQUEST
+      const body = exception.getResponse() as any
+      errors = body.errors || null
+      message = body.message || 'Invalid Data'
+      status = HttpStatus.BAD_REQUEST
     } else if (exception instanceof QueryFailedError) {
-        message = 'Failed to execute the query'
-    } else if(exception instanceof HttpException) {
-        message = exception.message;
-        status = exception.getStatus();
+      message = 'Failed to execute the query'
+    } else if (exception instanceof HttpException) {
+      message = exception.message;
+      status = exception.getStatus();
     }
-    
+
     const responseBody: ErrorResponse = {
       success: false,
       message,

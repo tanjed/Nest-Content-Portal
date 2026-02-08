@@ -11,30 +11,19 @@ import { SharedModule } from './shared/shared.module';
 import { CategoryModule } from './modules/category/category.module';
 import { RolePermissionModule } from './modules/role-permission/role-permission.module';
 import { ConfigModule } from '@nestjs/config';
+import { AdminModule } from './modules/admin/admin.module';
 
 export const STORAGE_PATH = './storage';
 export const TEMP_PATH = './tmp';
 @Module({
   imports: [
-    MulterModule.register({
-      storage: {
-        destination: TEMP_PATH,
-        filename: (_, file, cb) => {
-         cb(null, `${Date.now()}-${file.originalname}`);
-        },
-      }
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env`,
     }),
     DatabaseModule,
     SharedModule,
-    QueueModule,
-    ContentModule,
-    UserModule,
-    CategoryModule,
-    RolePermissionModule,
+    AdminModule
   ],
   controllers: [],
   providers: [
@@ -53,21 +42,21 @@ export const TEMP_PATH = './tmp';
           whitelist: true,
           transform: true,
           stopAtFirstError: false,
-          exceptionFactory : (errors) => {
+          exceptionFactory: (errors) => {
             const formattedErrors = errors.reduce((acc, error) => {
-                acc[error.property] = Object.values(error.constraints || {});
-                return acc;
-              }, {} as Record<string, string[]>)
+              acc[error.property] = Object.values(error.constraints || {});
+              return acc;
+            }, {} as Record<string, string[]>)
 
-              return new BadRequestException({
-                  message : 'Invalid data',
-                  errors : formattedErrors
-              })
-            }
+            return new BadRequestException({
+              message: 'Invalid data',
+              errors: formattedErrors
+            })
+          }
         });
       },
     }
   ],
 })
 
-export class AppModule {}
+export class AppModule { }

@@ -48,7 +48,37 @@
                         },
                         "description": "Register a new admin user"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/auth/register",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "auth",
+                                        "register"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"full_name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"status\": 1,\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Login",
@@ -91,7 +121,37 @@
                         },
                         "description": "Login to get JWT token. Token is automatically saved to collection variable."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/auth/login",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "auth",
+                                        "login"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"token\": \"ey...\",\n    \"user\": {\n        \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n        \"email\": \"admin@example.com\",\n        \"full_name\": \"Admin User\",\n        \"roles\": [\"admin\"]\n    }\n}"
+                        }
+                    ]
                 }
             ]
         },
@@ -130,7 +190,36 @@
                         },
                         "description": "Get paginated list of categories"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/categories?page=1&limit=10",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "categories"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n            \"name\": \"Technology\",\n            \"slug\": \"technology\",\n            \"description\": \"Tech news\",\n            \"created_at\": \"2024-01-01T12:00:00Z\",\n            \"updated_at\": \"2024-01-01T12:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"lastPage\": 1\n    }\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Get Category by ID",
@@ -155,7 +244,37 @@
                         },
                         "description": "Get a single category by ID"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "categories",
+                                        "{{categoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Technology\",\n    \"slug\": \"technology\",\n    \"description\": \"Tech news\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Create Category",
@@ -187,7 +306,36 @@
                         },
                         "description": "Create a new category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/categories",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "categories"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Technology\",\n    \"slug\": \"technology\",\n    \"description\": \"Tech news and updates\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Update Category",
@@ -220,7 +368,37 @@
                         },
                         "description": "Update an existing category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "categories",
+                                        "{{categoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Technology Updated\",\n    \"slug\": \"technology-updated\",\n    \"description\": \"Updated description\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:30:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Delete Category",
@@ -245,7 +423,37 @@
                         },
                         "description": "Delete a category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "categories",
+                                        "{{categoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Category deleted successfully\"\n}"
+                        }
+                    ]
                 }
             ]
         },
@@ -284,7 +492,36 @@
                         },
                         "description": "Get paginated list of sub-categories"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/sub-categories?page=1&limit=10",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "sub-categories"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n            \"name\": \"Mobile Apps\",\n            \"slug\": \"mobile-apps\",\n            \"category_slug\": \"technology\",\n            \"description\": \"Mobile apps news\",\n            \"created_at\": \"2024-01-01T12:00:00Z\",\n            \"updated_at\": \"2024-01-01T12:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"lastPage\": 1\n    }\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Get Sub-Category by ID",
@@ -309,7 +546,37 @@
                         },
                         "description": "Get a single sub-category by ID"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "sub-categories",
+                                        "{{subCategoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps\",\n    \"slug\": \"mobile-apps\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Mobile apps news\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Create Sub-Category",
@@ -341,7 +608,36 @@
                         },
                         "description": "Create a new sub-category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/sub-categories",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "sub-categories"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps\",\n    \"slug\": \"mobile-apps\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Mobile application news\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Update Sub-Category",
@@ -374,7 +670,37 @@
                         },
                         "description": "Update an existing sub-category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "sub-categories",
+                                        "{{subCategoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps Updated\",\n    \"slug\": \"mobile-apps-updated\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Updated description\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:30:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Delete Sub-Category",
@@ -399,7 +725,37 @@
                         },
                         "description": "Delete a sub-category"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "sub-categories",
+                                        "{{subCategoryId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Sub-category deleted successfully\"\n}"
+                        }
+                    ]
                 }
             ]
         },
@@ -438,7 +794,36 @@
                         },
                         "description": "Get paginated list of content"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/content?page=1&limit=10",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "content"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n            \"title\": \"Sample Article\",\n            \"slug\": \"sample-article\",\n            \"body\": \"<p>Content...</p>\",\n            \"status\": \"published\",\n            \"author_id\": \"uuid\",\n            \"category_id\": \"uuid\",\n            \"created_at\": \"2024-01-01T12:00:00Z\",\n            \"updated_at\": \"2024-01-01T12:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"lastPage\": 1\n    }\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Get Content by ID",
@@ -463,7 +848,37 @@
                         },
                         "description": "Get a single content by ID"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "content",
+                                        "{{contentId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"title\": \"Sample Article\",\n    \"slug\": \"sample-article\",\n    \"body\": \"<p>Content...</p>\",\n    \"status\": \"published\",\n    \"author_id\": \"uuid\",\n    \"category_id\": \"uuid\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Create Content",
@@ -533,7 +948,36 @@
                         },
                         "description": "Create new content with optional file attachments (max 2 files, 5MB each)"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/content",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "content"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"title\": \"Sample Article\",\n    \"slug\": \"sample-article\",\n    \"body\": \"<p>Content...</p>\",\n    \"status\": \"draft\",\n    \"author_id\": \"uuid\",\n    \"category_id\": \"uuid\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Update Content",
@@ -566,7 +1010,37 @@
                         },
                         "description": "Update existing content"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "content",
+                                        "{{contentId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"title\": \"Updated Article Title\",\n    \"slug\": \"updated-article-title\",\n    \"body\": \"<p>Updated content body...</p>\",\n    \"status\": \"published\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:30:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Delete Content",
@@ -591,7 +1065,37 @@
                         },
                         "description": "Delete content"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/content/{{contentId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "content",
+                                        "{{contentId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Content deleted successfully\"\n}"
+                        }
+                    ]
                 }
             ]
         },
@@ -620,7 +1124,36 @@
                         },
                         "description": "Get all roles"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/roles",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "roles"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "[\n    {\n        \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n        \"name\": \"Editor\",\n        \"description\": \"Content editor\",\n        \"created_at\": \"2024-01-01T12:00:00Z\",\n        \"updated_at\": \"2024-01-01T12:00:00Z\"\n    }\n]"
+                        }
+                    ]
                 },
                 {
                     "name": "Get Role by ID",
@@ -645,7 +1178,37 @@
                         },
                         "description": "Get a single role by ID"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/roles/{{roleId}}",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "roles",
+                                        "{{roleId}}"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Editor\",\n    \"description\": \"Content editor\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Create Role",
@@ -677,7 +1240,36 @@
                         },
                         "description": "Create a new role with permissions"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/roles",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "roles"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Editor\",\n    \"description\": \"Content editor role\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
+                        }
+                    ]
                 }
             ]
         },
@@ -706,7 +1298,36 @@
                         },
                         "description": "Get all available permissions"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/permissions",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "permissions"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "[\n    {\n        \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n        \"name\": \"content:read\",\n        \"description\": \"Read content\",\n        \"created_at\": \"2024-01-01T12:00:00Z\",\n        \"updated_at\": \"2024-01-01T12:00:00Z\"\n    }\n]"
+                        }
+                    ]
                 }
             ]
         },
@@ -746,7 +1367,39 @@
                         },
                         "description": "Sync permissions for a role (replaces existing permissions)"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/role-permissions/roles/{{roleId}}/permissions",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "role-permissions",
+                                        "roles",
+                                        "{{roleId}}",
+                                        "permissions"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Permissions synched successfully\"\n}"
+                        }
+                    ]
                 },
                 {
                     "name": "Assign Role to User",
@@ -780,7 +1433,38 @@
                         },
                         "description": "Assign roles to a user"
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "name": "Success",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/admin/role-permissions/users/assign",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "admin",
+                                        "role-permissions",
+                                        "users",
+                                        "assign"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"message\": \"Roles assigned successfully\"\n}"
+                        }
+                    ]
                 }
             ]
         }

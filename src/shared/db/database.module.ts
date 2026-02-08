@@ -1,9 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { DiscoveryModule } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { SharedModule } from "../shared.module";
 import { SeederModule } from "./seeder/seeder.module";
+
+@Global()
 @Module({
     imports: [
         SharedModule,
