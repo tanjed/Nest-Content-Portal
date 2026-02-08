@@ -1,6 +1,6 @@
 import { Content, ContentStatus } from "@/shared/entities/content.entity";
 import { ContentRepositoryInterface } from "./content.respository.interface";
-import { Repository, MoreThan, MoreThanOrEqual } from "typeorm";
+import { Repository, MoreThan, MoreThanOrEqual, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable } from "@nestjs/common";
 
@@ -49,6 +49,9 @@ export class ContentRepository implements ContentRepositoryInterface {
             take: limit,
             order: { views: 'DESC' }
         });
+    }
+    updateViews(id: string): Promise<UpdateResult> {
+        return this.contentRepository.update(id, { views: () => "views + 1" });
     }
 
 }

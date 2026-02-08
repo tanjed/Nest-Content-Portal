@@ -14,8 +14,12 @@ export class ContentService implements ContentServiceInterface {
         private readonly contentRepository: ContentRepositoryInterface,
     ) { }
 
-    findContent(id: string): Promise<Content | null> {
-        return this.contentRepository.findContent(id);
+    async findContent(id: string): Promise<Content | null> {
+        const content = await this.contentRepository.findContent(id);
+        if (content) {
+            await this.contentRepository.updateViews(id);
+        }
+        return content;
     }
     findPopularContents(data: PopularContentsDto): Promise<Content[]> {
         const { limit, fromDate } = data;

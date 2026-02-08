@@ -1,0 +1,169 @@
+{
+    "info": {
+        "_postman_id": "news-portal-public-api-collection",
+        "name": "News Portal Public API",
+        "description": "Public API collection for News Portal - Content Access",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Content",
+            "item": [
+                {
+                    "name": "Get Content by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/content/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "content",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "UUID_HERE",
+                                    "description": "The ID of the content"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Popular Content",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/content/popular?limit=10&fromDate=2024-01-01",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "content",
+                                "popular"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of items to return"
+                                },
+                                {
+                                    "key": "fromDate",
+                                    "value": "2024-01-01",
+                                    "description": "Filter by date (optional)"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Latest Content",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/content/latest?limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "content",
+                                "latest"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of items to return"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Content by Category",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/content/category/:categorySlug?limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "content",
+                                "category",
+                                ":categorySlug"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of items to return"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "categorySlug",
+                                    "value": "technology",
+                                    "description": "The slug of the category"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Popular Content by Category",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/content/popular/category/:categorySlug?limit=10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "content",
+                                "popular",
+                                "category",
+                                ":categorySlug"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of items to return"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "categorySlug",
+                                    "value": "technology",
+                                    "description": "The slug of the category"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}

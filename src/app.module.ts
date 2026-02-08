@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { STORAGE_PATH, TEMP_PATH } from './shared/constants';
 import { PublicModule } from './modules/public/public.module';
+import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,10 @@ import { PublicModule } from './modules/public/public.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ApiResponseInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TimeZoneInterceptor,
     },
     {
       provide: APP_PIPE,

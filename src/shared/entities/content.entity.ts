@@ -2,6 +2,7 @@ import { Category } from '../../modules/admin/category/entity/category.entity';
 
 import { User } from '../../modules/admin/user/entities/user.entity';
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -12,6 +13,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Attachment } from '../../modules/admin/attachments/entity/attachment.entity';
+import { MaintainTimeZone } from '../decorator/timezone.decorator';
 
 export enum ContentStatus {
   DRAFT = 'draft',
@@ -57,12 +59,15 @@ export class Content {
   @Column({ name: 'views', type: 'int', default: 0 })
   views: number;
 
+  @MaintainTimeZone()
   @Column({ name: 'published_at', type: 'timestamp', nullable: true })
   publishedAt: Date;
 
+  @MaintainTimeZone()
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
+  @MaintainTimeZone()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
@@ -76,5 +81,17 @@ export class Content {
   subCategory: Category;
 
   @OneToMany(() => Attachment, (attachment) => attachment.content)
-  attachments: Attachment[];
+  attachments: Attachment[]
+
+  @AfterLoad()
+  setAttachment() {
+    if (this.attachments) {
+      this.attachments = this.attachments.map((attachment) => {
+        return {
+          ...attachment,
+          url: `${process.env.APP_URL}/${attachment.url}`,
+        };
+      });
+    }
+  }
 }
