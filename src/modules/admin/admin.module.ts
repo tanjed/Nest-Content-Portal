@@ -1,14 +1,14 @@
-import { TEMP_PATH } from "@/app.module";
+import { TEMP_PATH } from "@/shared/constants";
 import { QueueModule } from "@/infrastructure/queue/queue.module";
 import { DatabaseModule } from "@/shared/db/database.module";
 import { SharedModule } from "@/shared/shared.module";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MulterModule } from "@nestjs/platform-express";
-import { ContentModule } from "../content/content.module";
-import { UserModule } from "../user/user.module";
-import { CategoryModule } from "../category/category.module";
-import { RolePermissionModule } from "../role-permission/role-permission.module";
+import { ContentModule } from "@/modules/admin/content/content.module";
+import { UserModule } from "@/modules/admin/user/user.module";
+import { CategoryModule } from "@/modules/admin/category/category.module";
+import { RolePermissionModule } from "@/modules/admin/role-permission/role-permission.module";
 
 @Module({
     imports: [

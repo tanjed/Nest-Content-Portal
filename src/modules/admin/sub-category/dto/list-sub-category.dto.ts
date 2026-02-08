@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { PaginationOptions } from '../../../shared/dto/pagination-options.dto';
+import { PaginationOptions } from '@/shared/dto/pagination-options.dto';
 
 export enum SortField {
   NAME = 'name',

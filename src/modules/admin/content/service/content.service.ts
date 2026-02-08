@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
-import { PaginatedResponseDto } from '../../../shared/dto/paginated-response.dto';
+import { PaginatedResponseDto } from '@/shared/dto/paginated-response.dto';
 import { DeepPartial, QueryRunner } from 'typeorm';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';

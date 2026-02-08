@@ -1,20 +1,12 @@
 import { BadRequestException, Module, ValidationPipe } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { MulterModule } from '@nestjs/platform-express';
-import { QueueModule } from './infrastructure/queue/queue.module';
-import { ContentModule } from './modules/content/content.module';
-import { UserModule } from './modules/user/user.module';
 import { DatabaseModule } from './shared/db/database.module';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
 import { ApiResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { SharedModule } from './shared/shared.module';
-import { CategoryModule } from './modules/category/category.module';
-import { RolePermissionModule } from './modules/role-permission/role-permission.module';
 import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
-
-export const STORAGE_PATH = './storage';
-export const TEMP_PATH = './tmp';
+import { STORAGE_PATH, TEMP_PATH } from './shared/constants';
 @Module({
   imports: [
     ConfigModule.forRoot({

@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { USER_SERVICE_INTERFACE, UserServiceInterface } from '../../../modules/user/service/user.service.interface';
+import { USER_SERVICE_INTERFACE, UserServiceInterface } from '@/modules/admin/user/service/user.service.interface';
 import { User } from '../../user/entities/user.entity';
 import { AssignRoleDto } from '../dto/assign-role.dto';
 import { CreateRoleDto } from '../dto/create-role.dto';
@@ -20,7 +20,7 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         private readonly permissionRepository: PermissionRepositoryInterface,
         @Inject(forwardRef(() => USER_SERVICE_INTERFACE))
         private readonly userService: UserServiceInterface,
-    ) {}
+    ) { }
 
     async getRoleByName(name: string): Promise<Role | null> {
         return this.roleRepository.findByName(name);

@@ -1,13 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { DEFAULT_ROLE } from "../../../../modules/role-permission/role-permission.module";
-import type { RolePermissionServiceInterface } from "../../../../modules/role-permission/service/role-permission.service.interface";
-import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../../../modules/role-permission/service/role-permission.service.interface";
-import type { UserServiceInterface } from "../../../../modules/user/service/user.service.interface";
-import { USER_SERVICE_INTERFACE } from "../../../../modules/user/service/user.service.interface";
+import { DEFAULT_ROLE } from "@/modules/admin/role-permission/role-permission.module";
+import type { RolePermissionServiceInterface } from "@/modules/admin/role-permission/service/role-permission.service.interface";
+import { ROLE_PERMISSION_SERVICE_INTERFACE } from "@/modules/admin/role-permission/service/role-permission.service.interface";
+import type { UserServiceInterface } from "@/modules/admin/user/service/user.service.interface";
+import { USER_SERVICE_INTERFACE } from "@/modules/admin/user/service/user.service.interface";
 import { Seeder } from ".././core/decorator";
 import { SeederInterface } from ".././core/seeder.interface";
 
-@Seeder({priority: 2})
+@Seeder({ priority: 2 })
 @Injectable()
 export class UserSeeder implements SeederInterface {
     constructor(
@@ -15,7 +15,7 @@ export class UserSeeder implements SeederInterface {
         private readonly userService: UserServiceInterface,
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
-    ) {}
+    ) { }
 
     async seed() {
         const users = [

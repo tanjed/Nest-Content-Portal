@@ -5,14 +5,14 @@ import { UserRepository } from "../repository/user.repository";
 import { USER_REPOSITORY_INTERFACE } from "../repository/user.repository.interface";
 import { UserService } from "./user.service";
 import { USER_SERVICE_INTERFACE } from "./user.service.interface";
-import { RolePermissionServiceModule } from "../../../modules/role-permission/service/role-permission.service.module";
+import { RolePermissionServiceModule } from "@/modules/admin/role-permission/service/role-permission.service.module";
 
 @Module({
-    imports:[
+    imports: [
         forwardRef(() => RolePermissionServiceModule),
         TypeOrmModule.forFeature([User])
     ],
-    providers:[
+    providers: [
         UserRepository,
         {
             provide: USER_SERVICE_INTERFACE,
@@ -23,7 +23,7 @@ import { RolePermissionServiceModule } from "../../../modules/role-permission/se
             useExisting: UserRepository,
         }
     ],
-    exports:[USER_SERVICE_INTERFACE],
+    exports: [USER_SERVICE_INTERFACE],
 })
 
-export class UserServiceModule {}
+export class UserServiceModule { }

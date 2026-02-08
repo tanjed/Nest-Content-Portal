@@ -1,4 +1,4 @@
-import { AttachmentUploadJobData } from '../../../infrastructure/queue/processors/attachment-upload.processor';
+import { AttachmentUploadJobData } from '@/infrastructure/queue/processors/attachment-upload.processor';
 
 export const ATTACHMENT_SERVICE_INTERFACE = Symbol('ATTACHMENT_SERVICE_INTERFACE');
 

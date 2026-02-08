@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AttachmentServiceModule } from "../../../modules/attachments/service/attachment.service.module";
+import { AttachmentServiceModule } from "@/modules/admin/attachments/service/attachment.service.module";
 import { Content } from "../entities/content.entity";
 import { ContentRepository } from "../repository/content.repository";
 import { CONTENT_REPOSITORY_INTERFACE } from "../repository/content.repository.interface";
 import { ContentService } from "./content.service";
 import { CONTENT_SERVICE_INTERFACE } from "./content.service.interface";
-import { Category } from "../../../modules/category/entity/category.entity";
-import { SubCategory } from "../../../modules/sub-category/entity/sub-category.entity";
+import { Category } from "@/modules/admin/category/entity/category.entity";
+import { SubCategory } from "@/modules/admin/sub-category/entity/sub-category.entity";
 
 @Module({
     imports:[

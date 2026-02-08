@@ -1,4 +1,4 @@
-import { BaseRepositoryInterface } from "../../../shared/base/base.repository.interface";
+import { BaseRepositoryInterface } from "@/shared/base/base.repository.interface";
 import { User } from "../entities/user.entity";
 import { FindOptionsRelations, FindOptionsSelect } from "typeorm";
 

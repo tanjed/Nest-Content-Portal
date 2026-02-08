@@ -1,5 +1,5 @@
 import { IsEmail, IsOptional, IsString, MaxLength } from "class-validator";
-import { IsPassword } from "../../../shared/validation/is-valid-password.decorator";
+import { IsPassword } from "@/shared/validation/is-valid-password.decorator";
 
 export class UpdateUserDto {
     @IsOptional()

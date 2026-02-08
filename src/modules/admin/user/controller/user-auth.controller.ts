@@ -1,14 +1,14 @@
 import { Body, Controller, HttpStatus, Inject, Post } from "@nestjs/common";
-import type { JwtServiceInterface } from "../../../shared/jwt/jwt.service.interface";
-import { JWT_SERVICE_INTERFACE } from "../../../shared/jwt/jwt.service.interface";
+import type { JwtServiceInterface } from "@/shared/jwt/jwt.service.interface";
+import { JWT_SERVICE_INTERFACE } from "@/shared/jwt/jwt.service.interface";
 import { AdminLoginDto } from "../dto/admin-login.dto";
 import { CreateUserDto } from "../dto/create-user.dto";
 import type { UserServiceInterface } from "../service/user.service.interface";
 import { USER_SERVICE_INTERFACE } from "../service/user.service.interface";
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../role-permission/service/role-permission.service.interface";
 import type { RolePermissionServiceInterface } from "../../role-permission/service/role-permission.service.interface";
-import { Can } from "../../../shared/decorator/permissions.decorator";
-import { PERMISSIONS } from "../../../modules/role-permission/constants/permissions";
+import { Can } from "@/shared/decorator/permissions.decorator";
+import { PERMISSIONS } from "@/modules/admin/role-permission/constants/permissions";
 import { AuthenticateGuard } from "src/shared/guard/authenticate.guard";
 import { AuthorizeGuard } from "src/shared/guard/authorize.guard";
 import { UseGuards } from "@nestjs/common";

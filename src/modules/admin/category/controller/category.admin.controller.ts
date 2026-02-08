@@ -5,7 +5,7 @@ import { ListCategoryDto } from '../dto/list-category.dto';
 import type { CategoryServiceInterface } from '../service/category.service.interface';
 import { CATEGORY_SERVICE_INTERFACE } from '../service/category.service.interface';
 import { Can } from 'src/shared/decorator/permissions.decorator';
-import { PERMISSIONS } from 'src/modules/role-permission/constants/permissions';
+import { PERMISSIONS } from '@/modules/admin/role-permission/constants/permissions';
 import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
 

@@ -7,8 +7,8 @@ import { CONTENT_SERVICE_INTERFACE } from '../service/content.service.interface'
 import { UpdateContentDto } from '../dto/update-content.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Can } from 'src/shared/decorator/permissions.decorator';
-import { Permission } from 'src/modules/role-permission/entity/permission.entity';
-import { PERMISSIONS } from 'src/modules/role-permission/constants/permissions';
+import { Permission } from '@/modules/admin/role-permission/entity/permission.entity';
+import { PERMISSIONS } from '@/modules/admin/role-permission/constants/permissions';
 import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
 import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 

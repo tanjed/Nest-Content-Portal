@@ -3,7 +3,7 @@ import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dt
 import { CreateContentDto } from "../dto/create-content.dto"
 import { UpdateContentDto } from "../dto/update-content.dto"
 import { Content } from "../entities/content.entity"
-import { PaginatedResponseDto } from "../../../shared/dto/paginated-response.dto"
+import { PaginatedResponseDto } from "@/shared/dto/paginated-response.dto"
 
 export const CONTENT_SERVICE_INTERFACE = Symbol('CONTENT_SERVICE_INTERFACE')
 

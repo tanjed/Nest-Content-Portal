@@ -1,7 +1,7 @@
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { QUEUE_AVAILABLE } from '../../../infrastructure/queue/queue.list';
+import { QUEUE_AVAILABLE } from '@/infrastructure/queue/queue.list';
 import { Attachment } from '../entity/attachment.entity';
 import { ATTACHMENT_REPOSITORY_INTERFACE, AttachmentRepository } from '../repository/attachment.repository';
 import { AttachmentService } from './attachment.service';

@@ -6,8 +6,8 @@ import { PERMISSION_REPOSITORY_INTERFACE, PermissionRepository } from '../reposi
 import { ROLE_REPOSITORY_INTERFACE, RoleRepository } from '../repository/role.repository';
 import { RolePermissionService } from './role-permission.service';
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from './role-permission.service.interface';
-import { UserServiceModule } from '../../../modules/user/service/user.service.module';
-import { User } from '../../../modules/user/entities/user.entity';
+import { UserServiceModule } from '@/modules/admin/user/service/user.service.module';
+import { User } from '@/modules/admin/user/entities/user.entity';
 
 @Module({
     imports: [
@@ -32,4 +32,4 @@ import { User } from '../../../modules/user/entities/user.entity';
     ],
     exports: [ROLE_PERMISSION_SERVICE_INTERFACE, PERMISSION_REPOSITORY_INTERFACE],
 })
-export class RolePermissionServiceModule {}
+export class RolePermissionServiceModule { }

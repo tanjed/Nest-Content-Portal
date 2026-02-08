@@ -4,7 +4,7 @@ import { UpdateSubCategoryDto } from '../dto/update-sub-category.dto';
 import { ListSubCategoryDto } from '../dto/list-sub-category.dto';
 import type { SubCategoryServiceInterface } from '../service/sub-category.service.interface';
 import { SUB_CATEGORY_SERVICE_INTERFACE } from '../service/sub-category.service.interface';
-import { PERMISSIONS } from 'src/modules/role-permission/constants/permissions';
+import { PERMISSIONS } from '@/modules/admin/role-permission/constants/permissions';
 import { Can } from 'src/shared/decorator/permissions.decorator';
 import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
 import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';

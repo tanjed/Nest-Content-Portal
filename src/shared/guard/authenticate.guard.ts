@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import type { JwtServiceInterface } from "../jwt/jwt.service.interface";
 import { JWT_SERVICE_INTERFACE } from "../jwt/jwt.service.interface";
-import { USER_SERVICE_INTERFACE, UserServiceInterface } from "../../modules/user/service/user.service.interface";
+import { USER_SERVICE_INTERFACE, UserServiceInterface } from "@/modules/admin/user/service/user.service.interface";
 import { Reflector } from "@nestjs/core";
 import { PUBLIC_ROUTE_KEY } from "../decorator/public-route.decorator";
 

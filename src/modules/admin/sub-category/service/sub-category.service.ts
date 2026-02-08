@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { PaginatedResult } from '../../../shared/dto/pagination-options.dto';
+import { PaginatedResult } from '@/shared/dto/pagination-options.dto';
 import { SubCategory } from '../entity/sub-category.entity';
 import { CreateSubCategoryDto } from '../dto/create-sub-category.dto';
 import { UpdateSubCategoryDto } from '../dto/update-sub-category.dto';

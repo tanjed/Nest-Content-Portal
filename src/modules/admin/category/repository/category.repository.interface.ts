@@ -1,5 +1,5 @@
-import { BaseRepositoryInterface } from '../../../shared/base/base.repository.interface';
-import { PaginatedResult } from '../../../shared/dto/pagination-options.dto';
+import { BaseRepositoryInterface } from '@/shared/base/base.repository.interface';
+import { PaginatedResult } from '@/shared/dto/pagination-options.dto';
 import { Category } from '../entity/category.entity';
 import { ListCategoryDto } from '../dto/list-category.dto';
 

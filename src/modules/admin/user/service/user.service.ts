@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { ROLE_PERMISSION_SERVICE_INTERFACE, type RolePermissionServiceInterface } from '../../role-permission/service/role-permission.service.interface';
-import { TransactionService } from '../../../shared/db/transaction.service';
+import { TransactionService } from '@/shared/db/transaction.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User, UserStatus } from '../entities/user.entity';
