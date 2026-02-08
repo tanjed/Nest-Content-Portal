@@ -2,8 +2,8 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Inject } from '@nestjs/common';
 import { Job } from 'bullmq';
 import { ATTACHMENT_JOBS, QUEUE_AVAILABLE } from '../queue.list';
-import type { AttachmentServiceInterface } from '../../../modules/attachments/service/attachment.service.interface';
-import { ATTACHMENT_SERVICE_INTERFACE } from '../../../modules/attachments/service/attachment.service.interface';
+import type { AttachmentServiceInterface } from '../../../modules/admin/attachments/service/attachment.service.interface';
+import { ATTACHMENT_SERVICE_INTERFACE } from '../../../modules/admin/attachments/service/attachment.service.interface';
 
 export interface AttachmentUploadJobData {
   source: string;
