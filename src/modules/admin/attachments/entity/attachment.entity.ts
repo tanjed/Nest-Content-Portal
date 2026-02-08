@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Content } from "../../content/entities/content.entity";
+import { Content } from "../../../../shared/entities/content.entity";
 
 @Entity('attachments')
 export class Attachment {

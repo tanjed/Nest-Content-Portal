@@ -5,12 +5,12 @@ import { DeepPartial, QueryRunner } from 'typeorm';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
 import { UpdateContentDto } from '../dto/update-content.dto';
-import { Content } from '../entities/content.entity';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { ContentServiceInterface } from './content.service.interface';
 import type { AttachmentServiceInterface } from '../../attachments/service/attachment.service.interface';
 import { ATTACHMENT_SERVICE_INTERFACE } from '../../attachments/service/attachment.service.interface';
+import { Content } from '@/shared/entities/content.entity';
 
 @Injectable()
 export class ContentService implements ContentServiceInterface {

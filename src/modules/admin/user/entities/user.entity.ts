@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { Content } from "../../content/entities/content.entity";
+import { Content } from "../../../../shared/entities/content.entity";
 import { Role } from "../../role-permission/entity/role.entity";
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -12,35 +12,35 @@ export enum UserStatus {
 @Index(['email'])
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id : string;
+    id: string;
 
-    @Column({name:'full_name', type:'varchar', length: 50})
-    full_name:string;
+    @Column({ name: 'full_name', type: 'varchar', length: 50 })
+    full_name: string;
 
-    @Column({name:'email', type:'varchar', length: 100, unique: true})
-    email:string;
+    @Column({ name: 'email', type: 'varchar', length: 100, unique: true })
+    email: string;
 
     @Exclude()
-    @Column({name:'password', type:'varchar', length: 100})
-    password:string;
+    @Column({ name: 'password', type: 'varchar', length: 100 })
+    password: string;
 
-    @Column({name:'status', type:'smallint', default: UserStatus.ACTIVE})
+    @Column({ name: 'status', type: 'smallint', default: UserStatus.ACTIVE })
     status: UserStatus;
 
-    @Column({name:'profile_img', type:"text", nullable: true})
+    @Column({ name: 'profile_img', type: "text", nullable: true })
     profileImage: string;
 
-    @CreateDateColumn({name:'created_at', type:'timestamp'})
-    createdAt:Date;
+    @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+    createdAt: Date;
 
-    @UpdateDateColumn({name:'updated_at', type:'timestamp'})
-    updatedAt:Date;
+    @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+    updatedAt: Date;
 
     @OneToMany(() => Content, (content) => content.author)
-    contents:Content[];
+    contents: Content[];
 
     @ManyToMany(() => Role, (role) => role.users)
-    @JoinTable({name: 'user_roles'})
+    @JoinTable({ name: 'user_roles' })
     roles: Role[];
 
     @BeforeInsert()

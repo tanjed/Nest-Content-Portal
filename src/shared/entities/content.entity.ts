@@ -1,6 +1,6 @@
-import { Category } from '../../category/entity/category.entity';
-import { SubCategory } from '../../sub-category/entity/sub-category.entity';
-import { User } from '../../user/entities/user.entity';
+import { Category } from '../../modules/admin/category/entity/category.entity';
+
+import { User } from '../../modules/admin/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Attachment } from '../../attachments/entity/attachment.entity';
+import { Attachment } from '../../modules/admin/attachments/entity/attachment.entity';
 
 export enum ContentStatus {
   DRAFT = 'draft',
@@ -72,8 +72,8 @@ export class Content {
   @ManyToOne(() => Category, (category) => category.contents)
   category: Category;
 
-  @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
-  subCategory: SubCategory;
+  @ManyToOne(() => Category, (category) => category.subCategoryContents)
+  subCategory: Category;
 
   @OneToMany(() => Attachment, (attachment) => attachment.content)
   attachments: Attachment[];

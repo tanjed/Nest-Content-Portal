@@ -1,5 +1,5 @@
 import { IsDateString, IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
-import { ContentStatus } from '../entities/content.entity';
+import { ContentStatus } from '../../../../shared/entities/content.entity';
 import { Expose } from 'class-transformer';
 
 export class CreateContentDto {
