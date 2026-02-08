@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { STORAGE_PATH, TEMP_PATH } from './shared/constants';
+import { PublicModule } from './modules/public/public.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,7 +16,8 @@ import { STORAGE_PATH, TEMP_PATH } from './shared/constants';
     }),
     DatabaseModule,
     SharedModule,
-    AdminModule
+    AdminModule,
+    PublicModule,
   ],
   controllers: [],
   providers: [
