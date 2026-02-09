@@ -3,6 +3,7 @@ import { ROLE_PERMISSION_SERVICE_INTERFACE, type RolePermissionServiceInterface 
 import { TransactionService } from '@/shared/db/transaction.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { AssignRoleDto } from '../../role-permission/dto/assign-role.dto';
 import { User, UserStatus } from '../entities/user.entity';
 import { USER_REPOSITORY_INTERFACE, type UserRepositoryInterface } from '../repository/user.repository.interface';
 import type { UserServiceInterface } from './user.service.interface';
@@ -75,7 +76,7 @@ export class UserService implements UserServiceInterface {
             const userData: Partial<User> = {};
             if (data.name !== undefined) userData.full_name = data.name;
             if (data.email !== undefined) userData.email = data.email;
-            if (data.password !== undefined) userData.password = data.password;
+            // if (data.password !== undefined) userData.password = data.password;
             if (data.status !== undefined) userData.status = data.status;
             if (data.profileImage !== undefined) userData.profileImage = data.profileImage;
             if (roles !== undefined) userData.roles = roles;
@@ -110,5 +111,31 @@ export class UserService implements UserServiceInterface {
         }
 
         return user;
+    }
+
+    async assignRoleToUser(data: AssignRoleDto): Promise<User> {
+        const user = await this.userRepository.find(data.userId, { roles: true });
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        // Fetch all roles by IDs
+        const roles = await this.rolePermissionService.findRolesByIds(data.roleIds);
+
+        if (roles.length !== data.roleIds.length) {
+            throw new NotFoundException('One or more roles not found');
+        }
+
+        return this.transactionService.execute(async (queryRunner) => {
+            const userData: Partial<User> = {
+                roles: roles
+            };
+            const updated = await this.userRepository.update(data.userId, userData, queryRunner);
+
+            if (!updated) {
+                throw new NotFoundException('User not found');
+            }
+            return updated;
+        });
     }
 }

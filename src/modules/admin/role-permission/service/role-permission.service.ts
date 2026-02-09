@@ -1,7 +1,4 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { USER_SERVICE_INTERFACE, UserServiceInterface } from '@/modules/admin/user/service/user.service.interface';
-import { User } from '../../user/entities/user.entity';
-import { AssignRoleDto } from '../dto/assign-role.dto';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoleDto } from '../dto/create-role.dto';
 import { Role } from '../entity/role.entity';
 import { Permission } from '../entity/permission.entity';
@@ -18,8 +15,6 @@ export class RolePermissionService implements RolePermissionServiceInterface {
         private readonly roleRepository: RoleRepositoryInterface,
         @Inject(PERMISSION_REPOSITORY_INTERFACE)
         private readonly permissionRepository: PermissionRepositoryInterface,
-        @Inject(forwardRef(() => USER_SERVICE_INTERFACE))
-        private readonly userService: UserServiceInterface,
     ) { }
 
     async getRoleByName(name: string): Promise<Role | null> {
@@ -63,27 +58,6 @@ export class RolePermissionService implements RolePermissionServiceInterface {
 
     async findRolesByIds(ids: string[]): Promise<Role[]> {
         return this.roleRepository.findByIds(ids);
-    }
-
-    async assignRoleToUser(data: AssignRoleDto): Promise<User> {
-        const user = await this.userService.findById(data.userId, { roles: true });
-        if (!user) {
-            throw new NotFoundException('User not found');
-        }
-
-        // Fetch all roles by IDs
-        const roles = await this.roleRepository.findByIds(data.roleIds, { permissions: true });
-
-        if (roles.length !== data.roleIds.length) {
-            throw new NotFoundException('One or more roles not found');
-        }
-
-        // Assign roles to user
-        user.roles = roles as any;
-        await this.userService.update(data.userId, { roles: roles as any });
-
-        // Return updated user with roles
-        return this.userService.findById(data.userId, { roles: true }) as Promise<User>;
     }
 
     async getRoles(): Promise<Role[]> {

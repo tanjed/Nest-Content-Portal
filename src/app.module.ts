@@ -1,4 +1,4 @@
-import { BadRequestException, Module, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { DatabaseModule } from './shared/db/database.module';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
@@ -6,9 +6,13 @@ import { ApiResponseInterceptor } from './shared/interceptors/response.intercept
 import { SharedModule } from './shared/shared.module';
 import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
-import { STORAGE_PATH, TEMP_PATH } from './shared/constants';
+import { REQUEST_CONTEXT_STORE, STORAGE_PATH, TEMP_PATH } from './shared/constants';
 import { PublicModule } from './modules/public/public.module';
 import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor';
+import { RequestContextMiddleware } from './shared/middlewares/request-context.middleware';
+import { AsyncLocalStorage } from 'async_hooks';
+import { RequestContext } from './shared/types/request-context.type';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +26,11 @@ import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor'
   ],
   controllers: [],
   providers: [
+    {
+      provide: REQUEST_CONTEXT_STORE,
+      useValue: new AsyncLocalStorage<RequestContext>(),
+    },
+    RequestContextMiddleware,
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
@@ -37,7 +46,7 @@ import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor'
     {
       provide: APP_PIPE,
       useFactory: () => {
-        new ValidationPipe({
+        return new ValidationPipe({
           whitelist: true,
           transform: true,
           stopAtFirstError: false,
@@ -57,5 +66,10 @@ import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor'
     }
   ],
 })
-
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestContextMiddleware)
+      .forRoutes('*');
+  }
+}

@@ -6,5 +6,3 @@ export interface RequestContext {
     ip?: string;
     userAgent?: string;
 }
-
-export const requestContext = new AsyncLocalStorage<RequestContext>();
