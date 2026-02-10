@@ -27,5 +27,9 @@ import { RequestContext } from './shared/types/request-context.type';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestContextMiddleware).forRoutes('*');
+  }
+}
 

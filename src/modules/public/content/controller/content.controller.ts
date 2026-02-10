@@ -6,7 +6,6 @@ import { LatestContentDto } from "../dto/latest-content.dto";
 import dayjs from "dayjs";
 
 import { ThrottlerGuard } from "@nestjs/throttler";
-import { ContentResponseDto } from "../dto/content.response.dto";
 import { plainToInstance } from "class-transformer";
 
 @Controller('content')
@@ -18,23 +17,23 @@ export class ContentController {
     ) { }
 
     @Get(':id')
-    async findContent(@Param('id') id: string): Promise<ContentResponseDto> {
+    async findContent(@Param('id') id: string) {
         const content = await this.contentService.findContent(id);
-        return plainToInstance(ContentResponseDto, content);
+        return content;
     }
 
     @Get('popular')
-    async findPopularContents(@Query() dto: PopularContentsDto): Promise<ContentResponseDto[]> {
+    async findPopularContents(@Query() dto: PopularContentsDto) {
         return this.contentService.findPopularContents(dto);
     }
 
     @Get('latest')
-    async findNewestContents(@Query() dto: LatestContentDto): Promise<ContentResponseDto[]> {
+    async findNewestContents(@Query() dto: LatestContentDto) {
         return this.contentService.findNewestContents(dto);
     }
 
     @Get('category/:categorySlug')
-    async findContentsByCategory(@Param('categorySlug') categorySlug: string): Promise<ContentResponseDto[]> {
+    async findContentsByCategory(@Param('categorySlug') categorySlug: string) {
         return this.contentService.findContentsByCategory({
             categorySlug,
             limit: 10
@@ -42,7 +41,7 @@ export class ContentController {
     }
 
     @Get('popular/category/:categorySlug')
-    async findPopularContentsByCategory(@Param('categorySlug') categorySlug: string): Promise<ContentResponseDto[]> {
+    async findPopularContentsByCategory(@Param('categorySlug') categorySlug: string) {
         return this.contentService.findPopularContentsByCategory({
             categorySlug,
             limit: 10,
