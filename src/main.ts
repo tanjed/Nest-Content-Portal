@@ -4,7 +4,7 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { ApiResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor';
 import { CONTEXT_SERVICE_INTERFACE } from './shared/services/context.service.interface';
@@ -19,7 +19,24 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
 
   app.useGlobalFilters(new AllExceptionsFilter());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    transform: true,
+    stopAtFirstError: false,
+    transformOptions: { enableImplicitConversion: true },
+    exceptionFactory: (errors) => {
+      const formattedErrors = errors.reduce((acc, error) => {
+        acc[error.property] = Object.values(error.constraints || {});
+        return acc;
+      }, {} as Record<string, string[]>)
+
+      return new BadRequestException({
+        message: 'Invalid data',
+        errors: formattedErrors
+      })
+    }
+  })
+  );
   app.useGlobalInterceptors(new ApiResponseInterceptor());
   app.useGlobalInterceptors(new TimeZoneInterceptor(contextService, reflector));
 
