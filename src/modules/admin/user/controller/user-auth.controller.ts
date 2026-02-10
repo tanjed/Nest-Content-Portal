@@ -15,16 +15,13 @@ import { UseGuards } from "@nestjs/common";
 import { Public } from "@/shared/decorator/public-route.decorator";
 
 @Controller('admin/auth')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class UserAuthController {
     constructor(
         @Inject(USER_SERVICE_INTERFACE)
         private readonly userService: UserServiceInterface,
         @Inject(JWT_SERVICE_INTERFACE)
         private readonly jwtService: JwtServiceInterface,
-        @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
-        private readonly rolePermissionService: RolePermissionServiceInterface,
     ) { }
 
     @Post('register')

@@ -1,12 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ALL_PERMISSIONS } from "@/modules/admin/role-permission/constants/permissions";
-import { DEFAULT_ROLE } from "@/modules/admin/role-permission/role-permission.module";
-import type { RolePermissionServiceInterface } from "@/modules/admin/role-permission/service/role-permission.service.interface";
-import { ROLE_PERMISSION_SERVICE_INTERFACE } from "@/modules/admin/role-permission/service/role-permission.service.interface";
+import { ALL_PERMISSIONS } from "../../../../modules/admin/role-permission/constants/permissions";
+import { DEFAULT_ROLE } from "../../../../modules/admin/role-permission/role-permission.module";
+import type { RolePermissionServiceInterface } from "../../../../modules/admin/role-permission/service/role-permission.service.interface";
+import { ROLE_PERMISSION_SERVICE_INTERFACE } from "../../../../modules/admin/role-permission/service/role-permission.service.interface";
 import { SeederInterface } from ".././core/seeder.interface";
 import { Seeder } from ".././core/decorator";
-import { PERMISSION_REPOSITORY_INTERFACE } from "@/modules/admin/role-permission/repository/permission.repository";
-import type { PermissionRepositoryInterface } from "@/modules/admin/role-permission/repository/permission.repository.interface";
+import { PERMISSION_REPOSITORY_INTERFACE } from "../../../../modules/admin/role-permission/repository/permission.repository";
+import type { PermissionRepositoryInterface } from "../../../../modules/admin/role-permission/repository/permission.repository.interface";
 
 @Seeder({ priority: 1 })
 @Injectable()

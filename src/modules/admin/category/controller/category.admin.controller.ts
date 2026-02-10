@@ -10,13 +10,12 @@ import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
 
 @Controller('admin/categories')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class CategoryAdminController {
   constructor(
     @Inject(CATEGORY_SERVICE_INTERFACE)
     private readonly categoryService: CategoryServiceInterface,
-  ) {}
+  ) { }
 
   @Get()
   @Can(PERMISSIONS.CATEGORY.VIEW)

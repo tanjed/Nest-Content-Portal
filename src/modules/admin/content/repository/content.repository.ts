@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import dayjs from "dayjs";
-import { BaseRepository } from "@/shared/base/base.abstract.interface";
-import { PaginatedResult } from "@/shared/dto/pagination-options.dto";
+import { BaseRepository } from "../../../../shared/base/base.abstract.interface";
+import { PaginatedResult } from "../../../../shared/dto/pagination-options.dto";
 import { Between, Repository, QueryRunner } from "typeorm";
 import { AdminContentListRequestDto } from "../dto/admin-content-list-request.dto";
 import { ContentRepositoryInterface } from "./content.repository.interface";
-import { Content } from "@/shared/entities/content.entity";
+import { Content } from "../../../../shared/entities/content.entity";
 
 @Injectable()
 export class ContentRepository extends BaseRepository<Content> implements ContentRepositoryInterface {

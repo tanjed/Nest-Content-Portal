@@ -19,7 +19,7 @@ export class UserSeeder implements SeederInterface {
 
     async seed() {
         const users = [
-            { name: 'Super Admin', email: 'admin@example.com', password: 'p@ssword123#', roleName: DEFAULT_ROLE },
+            { name: 'Super Admin', email: 'admin@example.com', password: 'P@ssword123#', roleName: DEFAULT_ROLE },
         ];
 
         for (const user of users) {

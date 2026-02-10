@@ -5,7 +5,7 @@ import { UserRepository } from "../repository/user.repository";
 import { USER_REPOSITORY_INTERFACE } from "../repository/user.repository.interface";
 import { UserService } from "./user.service";
 import { USER_SERVICE_INTERFACE } from "./user.service.interface";
-import { RolePermissionServiceModule } from "@/modules/admin/role-permission/service/role-permission.service.module";
+import { RolePermissionServiceModule } from "../../role-permission/service/role-permission.service.module";
 
 @Module({
     imports: [

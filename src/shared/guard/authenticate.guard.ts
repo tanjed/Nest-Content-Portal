@@ -18,6 +18,7 @@ export class AuthenticateGuard implements CanActivate {
         private readonly reflector: Reflector,
     ) { }
     async canActivate(context: ExecutionContext): Promise<boolean> {
+        console.log('HRE');
 
         const isPublic = this.reflector.getAllAndOverride<boolean>(PUBLIC_ROUTE_KEY, [
             context.getHandler(),
@@ -30,6 +31,8 @@ export class AuthenticateGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers.authorization;
+        console.log(authHeader);
+
 
         if (!authHeader) {
             throw new UnauthorizedException('Unauthorized');

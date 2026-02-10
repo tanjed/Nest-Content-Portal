@@ -3,21 +3,20 @@ import { CreateRoleDto } from '../dto/create-role.dto';
 import type { RolePermissionServiceInterface } from '../service/role-permission.service.interface';
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from '../service/role-permission.service.interface';
 import { PERMISSIONS } from '../constants/permissions';
-import { Can } from 'src/shared/decorator/permissions.decorator';
-import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
-import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
+import { Can } from '../../../../shared/decorator/permissions.decorator';
+import { AuthenticateGuard } from '../../../../shared/guard/authenticate.guard';
+import { AuthorizeGuard } from '../../../../shared/guard/authorize.guard';
 
 @Controller('admin/roles')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class RoleController {
     constructor(
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
-    ) {}
+    ) { }
 
     @Post()
-    @Can(PERMISSIONS.ROLE.CREATE)   
+    @Can(PERMISSIONS.ROLE.CREATE)
     async create(@Body() data: CreateRoleDto) {
         return this.rolePermissionService.createRole(data);
     }

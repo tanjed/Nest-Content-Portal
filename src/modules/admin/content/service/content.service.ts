@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
-import { PaginatedResponseDto } from '@/shared/dto/paginated-response.dto';
+import { PaginatedResponseDto } from '../../../../shared/dto/paginated-response.dto';
 import { DeepPartial, QueryRunner } from 'typeorm';
 import { AdminContentListRequestDto } from '../dto/admin-content-list-request.dto';
 import { CreateContentDto } from '../dto/create-content.dto';
@@ -10,9 +10,9 @@ import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.i
 import { ContentServiceInterface } from './content.service.interface';
 import type { AttachmentServiceInterface } from '../../attachments/service/attachment.service.interface';
 import { ATTACHMENT_SERVICE_INTERFACE } from '../../attachments/service/attachment.service.interface';
-import { Content } from '@/shared/entities/content.entity';
+import { Content } from '../../../../shared/entities/content.entity';
 import * as fs from 'fs';
-import { STORAGE_PATH } from '@/shared/constants';
+import { STORAGE_PATH } from '../../../../shared/constants';
 import { randomUUID } from 'crypto';
 import { join } from 'path';
 

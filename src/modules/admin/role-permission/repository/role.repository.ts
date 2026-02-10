@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseRepository } from '@/shared/base/base.abstract.interface';
+import { BaseRepository } from '../../../../shared/base/base.abstract.interface';
 import { FindOptionsRelations, FindOptionsSelect, In, Repository } from 'typeorm';
 import { Role } from '../entity/role.entity';
 import { RoleRepositoryInterface } from './role.repository.interface';

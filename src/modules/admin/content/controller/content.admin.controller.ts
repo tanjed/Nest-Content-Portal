@@ -14,8 +14,7 @@ import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 
 
 @Controller('admin/content')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class ContentAdminController {
   constructor(
     @Inject(CONTENT_SERVICE_INTERFACE)

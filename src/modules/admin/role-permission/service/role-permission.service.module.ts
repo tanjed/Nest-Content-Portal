@@ -6,7 +6,7 @@ import { PERMISSION_REPOSITORY_INTERFACE, PermissionRepository } from '../reposi
 import { ROLE_REPOSITORY_INTERFACE, RoleRepository } from '../repository/role.repository';
 import { RolePermissionService } from './role-permission.service';
 import { ROLE_PERMISSION_SERVICE_INTERFACE } from './role-permission.service.interface';
-import { User } from '@/modules/admin/user/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Module({
     imports: [

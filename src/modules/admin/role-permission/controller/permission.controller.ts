@@ -8,13 +8,12 @@ import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 import { UseGuards } from '@nestjs/common';
 
 @Controller('admin/permissions')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class PermissionController {
     constructor(
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)
         private readonly rolePermissionService: RolePermissionServiceInterface,
-    ) {}
+    ) { }
 
     @Get()
     @Can(PERMISSIONS.ROLE.VIEW)

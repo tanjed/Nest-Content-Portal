@@ -8,8 +8,7 @@ import { AuthenticateGuard } from 'src/shared/guard/authenticate.guard';
 import { AuthorizeGuard } from 'src/shared/guard/authorize.guard';
 
 @Controller('admin/role-permissions')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class RolePermissionController {
     constructor(
         @Inject(ROLE_PERMISSION_SERVICE_INTERFACE)

@@ -7,8 +7,7 @@ import { AuthenticateGuard } from '@/shared/guard/authenticate.guard';
 import { AuthorizeGuard } from '@/shared/guard/authorize.guard';
 
 @Controller('user')
-@UseGuards(AuthenticateGuard)
-@UseGuards(AuthorizeGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class UserController {
   constructor(
     @Inject(USER_SERVICE_INTERFACE)
