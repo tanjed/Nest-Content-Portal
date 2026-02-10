@@ -12,12 +12,16 @@ import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor'
 import { RequestContextMiddleware } from './shared/middlewares/request-context.middleware';
 import { AsyncLocalStorage } from 'async_hooks';
 import { RequestContext } from './shared/types/request-context.type';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env`,
+    }),
+    MulterModule.register({
+      dest: TEMP_PATH,
     }),
     DatabaseModule,
     SharedModule,

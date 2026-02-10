@@ -8,7 +8,7 @@
     "variable": [
         {
             "key": "baseUrl",
-            "value": "http://localhost:3000",
+            "value": "http://localhost:8005",
             "type": "string"
         },
         {
@@ -458,308 +458,6 @@
             ]
         },
         {
-            "name": "Sub-Categories",
-            "item": [
-                {
-                    "name": "List Sub-Categories",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/admin/sub-categories?page=1&limit=10",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "admin",
-                                "sub-categories"
-                            ],
-                            "query": [
-                                {
-                                    "key": "page",
-                                    "value": "1"
-                                },
-                                {
-                                    "key": "limit",
-                                    "value": "10"
-                                }
-                            ]
-                        },
-                        "description": "Get paginated list of sub-categories"
-                    },
-                    "response": [
-                        {
-                            "name": "Success",
-                            "originalRequest": {
-                                "method": "GET",
-                                "header": [],
-                                "url": {
-                                    "raw": "{{baseUrl}}/admin/sub-categories?page=1&limit=10",
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "path": [
-                                        "admin",
-                                        "sub-categories"
-                                    ]
-                                }
-                            },
-                            "status": "OK",
-                            "code": 200,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n            \"name\": \"Mobile Apps\",\n            \"slug\": \"mobile-apps\",\n            \"category_slug\": \"technology\",\n            \"description\": \"Mobile apps news\",\n            \"created_at\": \"2024-01-01T12:00:00Z\",\n            \"updated_at\": \"2024-01-01T12:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"total\": 1,\n        \"lastPage\": 1\n    }\n}"
-                        }
-                    ]
-                },
-                {
-                    "name": "Get Sub-Category by ID",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "admin",
-                                "sub-categories",
-                                "{{subCategoryId}}"
-                            ]
-                        },
-                        "description": "Get a single sub-category by ID"
-                    },
-                    "response": [
-                        {
-                            "name": "Success",
-                            "originalRequest": {
-                                "method": "GET",
-                                "header": [],
-                                "url": {
-                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "path": [
-                                        "admin",
-                                        "sub-categories",
-                                        "{{subCategoryId}}"
-                                    ]
-                                }
-                            },
-                            "status": "OK",
-                            "code": 200,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps\",\n    \"slug\": \"mobile-apps\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Mobile apps news\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
-                        }
-                    ]
-                },
-                {
-                    "name": "Create Sub-Category",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"name\": \"Mobile Apps\",\n  \"slug\": \"mobile-apps\",\n  \"categorySlug\": \"technology\",\n  \"description\": \"Mobile application news\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{baseUrl}}/admin/sub-categories",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "admin",
-                                "sub-categories"
-                            ]
-                        },
-                        "description": "Create a new sub-category"
-                    },
-                    "response": [
-                        {
-                            "name": "Success",
-                            "originalRequest": {
-                                "method": "POST",
-                                "header": [],
-                                "url": {
-                                    "raw": "{{baseUrl}}/admin/sub-categories",
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "path": [
-                                        "admin",
-                                        "sub-categories"
-                                    ]
-                                }
-                            },
-                            "status": "Created",
-                            "code": 201,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps\",\n    \"slug\": \"mobile-apps\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Mobile application news\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:00:00Z\"\n}"
-                        }
-                    ]
-                },
-                {
-                    "name": "Update Sub-Category",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"name\": \"Mobile Apps Updated\",\n  \"description\": \"Updated description\"\n}"
-                        },
-                        "url": {
-                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "admin",
-                                "sub-categories",
-                                "{{subCategoryId}}"
-                            ]
-                        },
-                        "description": "Update an existing sub-category"
-                    },
-                    "response": [
-                        {
-                            "name": "Success",
-                            "originalRequest": {
-                                "method": "PUT",
-                                "header": [],
-                                "url": {
-                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "path": [
-                                        "admin",
-                                        "sub-categories",
-                                        "{{subCategoryId}}"
-                                    ]
-                                }
-                            },
-                            "status": "OK",
-                            "code": 200,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"id\": \"c6038e9d-704a-4716-8772-520556f02376\",\n    \"name\": \"Mobile Apps Updated\",\n    \"slug\": \"mobile-apps-updated\",\n    \"category_slug\": \"technology\",\n    \"description\": \"Updated description\",\n    \"created_at\": \"2024-01-01T12:00:00Z\",\n    \"updated_at\": \"2024-01-01T12:30:00Z\"\n}"
-                        }
-                    ]
-                },
-                {
-                    "name": "Delete Sub-Category",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "admin",
-                                "sub-categories",
-                                "{{subCategoryId}}"
-                            ]
-                        },
-                        "description": "Delete a sub-category"
-                    },
-                    "response": [
-                        {
-                            "name": "Success",
-                            "originalRequest": {
-                                "method": "DELETE",
-                                "header": [],
-                                "url": {
-                                    "raw": "{{baseUrl}}/admin/sub-categories/{{subCategoryId}}",
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "path": [
-                                        "admin",
-                                        "sub-categories",
-                                        "{{subCategoryId}}"
-                                    ]
-                                }
-                            },
-                            "status": "OK",
-                            "code": 200,
-                            "_postman_previewlanguage": "json",
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "application/json"
-                                }
-                            ],
-                            "cookie": [],
-                            "body": "{\n    \"success\": true,\n    \"message\": \"Sub-category deleted successfully\"\n}"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "Content",
             "item": [
                 {
@@ -925,8 +623,8 @@
                                 },
                                 {
                                     "key": "thumbnail",
-                                    "value": "https://example.com/image.jpg",
-                                    "type": "text"
+                                    "type": "file",
+                                    "src": []
                                 },
                                 {
                                     "key": "attachments",
@@ -1420,15 +1118,13 @@
                             "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"roleIds\": [\"{{roleId}}\"]\n}"
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/admin/role-permissions/users/assign",
+                            "raw": "{{baseUrl}}/user/assign-role",
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "path": [
-                                "admin",
-                                "role-permissions",
-                                "users",
-                                "assign"
+                                "user",
+                                "assign-role"
                             ]
                         },
                         "description": "Assign roles to a user"

@@ -11,6 +11,10 @@ import { ContentServiceInterface } from './content.service.interface';
 import type { AttachmentServiceInterface } from '../../attachments/service/attachment.service.interface';
 import { ATTACHMENT_SERVICE_INTERFACE } from '../../attachments/service/attachment.service.interface';
 import { Content } from '@/shared/entities/content.entity';
+import * as fs from 'fs';
+import { STORAGE_PATH } from '@/shared/constants';
+import { randomUUID } from 'crypto';
+import { join } from 'path';
 
 @Injectable()
 export class ContentService implements ContentServiceInterface {
@@ -19,9 +23,9 @@ export class ContentService implements ContentServiceInterface {
     private readonly contentRepository: ContentRepositoryInterface,
     @Inject(ATTACHMENT_SERVICE_INTERFACE)
     private readonly attachmentService: AttachmentServiceInterface,
-  ) {}
+  ) { }
 
-  async create(createContentDto: CreateContentDto, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
+  async create(createContentDto: CreateContentDto, thumbnail: Express.Multer.File, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
     const { publishedAt, ...rest } = createContentDto;
 
     const data: DeepPartial<Content> = {
@@ -29,9 +33,19 @@ export class ContentService implements ContentServiceInterface {
       views: 0,
       publishedAt: publishedAt ? new Date(publishedAt) : dayjs().utc().format(),
     };
+
+    const thumbnailFileName = `${randomUUID()}-${thumbnail.filename}`;
+    const destPath = join(STORAGE_PATH, thumbnailFileName);
+
+    await fs.promises.mkdir(STORAGE_PATH, { recursive: true });
+    await fs.promises.copyFile(thumbnail.path, destPath);
+    await fs.promises.unlink(thumbnail.path);
+
+    data.thumbnail = thumbnailFileName;
     const content = await this.contentRepository.create(data, queryRunner);
-    if(files && files.length > 0) {
-       await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
+
+    if (files && files.length > 0) {
+      await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
     }
     return content;
   }
@@ -56,11 +70,28 @@ export class ContentService implements ContentServiceInterface {
     return content;
   }
 
-  async update(id: string, updateContentDto: UpdateContentDto, files: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
-    const content = await this.contentRepository.update(id, updateContentDto, queryRunner);
+  async update(id: string, updateContentDto: UpdateContentDto, thumbnail?: Express.Multer.File, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
+    const data: DeepPartial<Content> = { ...updateContentDto };
+
+    if (thumbnail) {
+      const thumbnailFileName = `${randomUUID()}-${thumbnail.filename}`;
+      const destPath = join(STORAGE_PATH, thumbnailFileName);
+
+      await fs.promises.mkdir(STORAGE_PATH, { recursive: true });
+      await fs.promises.copyFile(thumbnail.path, destPath);
+      await fs.promises.unlink(thumbnail.path);
+
+      data.thumbnail = thumbnailFileName;
+    }
+
+    const content = await this.contentRepository.update(id, data, queryRunner);
 
     if (!content) {
       throw new NotFoundException(`Content with ID ${id} not found`);
+    }
+
+    if (files && files.length > 0) {
+      await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
     }
 
     return content;

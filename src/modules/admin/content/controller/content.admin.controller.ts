@@ -5,7 +5,7 @@ import { SlugGeneratorPipe } from '../pipe/slug.generator.pipe';
 import type { ContentServiceInterface } from '../service/content.service.interface';
 import { CONTENT_SERVICE_INTERFACE } from '../service/content.service.interface';
 import { UpdateContentDto } from '../dto/update-content.dto';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Can } from 'src/shared/decorator/permissions.decorator';
 import { Permission } from '@/modules/admin/role-permission/entity/permission.entity';
 import { PERMISSIONS } from '@/modules/admin/role-permission/constants/permissions';
@@ -20,7 +20,7 @@ export class ContentAdminController {
   constructor(
     @Inject(CONTENT_SERVICE_INTERFACE)
     private readonly contentService: ContentServiceInterface
-  ){}
+  ) { }
 
   @Get(':id')
   @Can(PERMISSIONS.CONTENT.VIEW)
@@ -37,21 +37,45 @@ export class ContentAdminController {
   @Post()
   @Can(PERMISSIONS.CONTENT.CREATE)
   @UseInterceptors(
-    FilesInterceptor('attachments', 2, {
+    FileFieldsInterceptor([
+      { name: 'attachments', maxCount: 10 },
+      { name: 'thumbnail', maxCount: 1 },
+    ], {
       limits: {
-        fileSize: 5 * 1024 * 1024, // 5MB
+        fileSize: 5 * 1024 * 1024,
       }
     })
   )
   @UsePipes(SlugGeneratorPipe)
-  async create(@Body() createContentDto: CreateContentDto, @UploadedFiles() files: Express.Multer.File[]) {
-    return this.contentService.create(createContentDto, files);
+  async create(
+    @Body() createContentDto: CreateContentDto,
+    @UploadedFiles() files: { attachments?: Express.Multer.File[], thumbnail?: Express.Multer.File[] }
+  ) {
+    const thumbnail = files?.thumbnail?.[0];
+    if (!thumbnail) {
+      throw new NotFoundException('Thumbnail is required');
+    }
+    return this.contentService.create(createContentDto, thumbnail, files?.attachments);
   }
 
   @Put(':id')
   @Can(PERMISSIONS.CONTENT.UPDATE)
-  async update(@Param('id') id: string, updateContentDto: UpdateContentDto) {
-    return this.contentService.update(id, updateContentDto);
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'attachments', maxCount: 10 },
+      { name: 'thumbnail', maxCount: 1 },
+    ], {
+      limits: {
+        fileSize: 5 * 1024 * 1024,
+      }
+    })
+  )
+  async update(
+    @Param('id') id: string,
+    updateContentDto: UpdateContentDto,
+    @UploadedFiles() files: { attachments?: Express.Multer.File[], thumbnail?: Express.Multer.File[] }
+  ) {
+    return this.contentService.update(id, updateContentDto, files?.thumbnail?.[0], files?.attachments);
   }
 
   @Delete(':id')

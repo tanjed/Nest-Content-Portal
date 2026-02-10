@@ -10,7 +10,7 @@ export const CONTENT_SERVICE_INTERFACE = Symbol('CONTENT_SERVICE_INTERFACE')
 export interface ContentServiceInterface {
     find(id: string): Promise<Content>
     findAllPaginated(request: AdminContentListRequestDto): Promise<PaginatedResponseDto<Content>>
-    create(createContentDto: CreateContentDto, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content>
-    update(id: string, updateContentDto: UpdateContentDto, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content>
+    create(createContentDto: CreateContentDto, thumbnail: Express.Multer.File, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content>
+    update(id: string, updateContentDto: UpdateContentDto, thumbnail?: Express.Multer.File, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content>
     delete(id: string): Promise<void>
 }
