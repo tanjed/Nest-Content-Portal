@@ -25,51 +25,7 @@ import { RequestContext } from './shared/types/request-context.type';
     PublicModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: REQUEST_CONTEXT_STORE,
-      useValue: new AsyncLocalStorage<RequestContext>(),
-    },
-    RequestContextMiddleware,
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ApiResponseInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TimeZoneInterceptor,
-    },
-    {
-      provide: APP_PIPE,
-      useFactory: () => {
-        return new ValidationPipe({
-          whitelist: true,
-          transform: true,
-          stopAtFirstError: false,
-          exceptionFactory: (errors) => {
-            const formattedErrors = errors.reduce((acc, error) => {
-              acc[error.property] = Object.values(error.constraints || {});
-              return acc;
-            }, {} as Record<string, string[]>)
-
-            return new BadRequestException({
-              message: 'Invalid data',
-              errors: formattedErrors
-            })
-          }
-        });
-      },
-    }
-  ],
+  providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(RequestContextMiddleware)
-      .forRoutes('*');
-  }
-}
+export class AppModule { }
+

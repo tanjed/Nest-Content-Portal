@@ -4,6 +4,7 @@ import { JWT_SERVICE_INTERFACE } from "../jwt/jwt.service.interface";
 import { USER_SERVICE_INTERFACE, UserServiceInterface } from "@/modules/admin/user/service/user.service.interface";
 import { Reflector } from "@nestjs/core";
 import { PUBLIC_ROUTE_KEY } from "../decorator/public-route.decorator";
+import { CONTEXT_SERVICE_INTERFACE, ContextServiceInterface } from "../services/context.service.interface";
 
 @Injectable()
 export class AuthenticateGuard implements CanActivate {
@@ -12,6 +13,8 @@ export class AuthenticateGuard implements CanActivate {
         private readonly jwtService: JwtServiceInterface,
         @Inject(USER_SERVICE_INTERFACE)
         private readonly userService: UserServiceInterface,
+        @Inject(CONTEXT_SERVICE_INTERFACE)
+        private readonly contextService: ContextServiceInterface,
         private readonly reflector: Reflector,
     ) { }
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -41,8 +44,9 @@ export class AuthenticateGuard implements CanActivate {
             throw new UnauthorizedException('Unauthorized');
         }
 
-        request.permissions = new Set<string>(payload.permissions);
-        request.user = user;
+        this.contextService.setItem('user', user);
+        this.contextService.setItem('permissions', new Set<string>(payload.permissions));
+
         return true;
     }
 }
