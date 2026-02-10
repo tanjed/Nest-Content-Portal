@@ -683,17 +683,39 @@
                         "method": "PUT",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
                             }
                         ],
                         "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"title\": \"Updated Article Title\",\n  \"body\": \"<p>Updated content body...</p>\",\n  \"status\": \"published\"\n}"
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "title",
+                                    "value": "Updated Article Title",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "body",
+                                    "value": "<p>Updated content body...</p>",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "published",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "thumbnail",
+                                    "type": "file",
+                                    "src": []
+                                },
+                                {
+                                    "key": "attachments",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
                         },
                         "url": {
                             "raw": "{{baseUrl}}/admin/content/{{contentId}}",
