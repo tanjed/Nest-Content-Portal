@@ -40,8 +40,8 @@ export class AdminContentListRequestDto implements PaginationOptions {
   @Expose({ name: 'sort_order' })
   sortOrder?: 'ASC' | 'DESC' = 'DESC';
 
-  @IsNotEmpty()
+  @IsOptional()
   @ValidateNested()
   @Type(() => DateRangeDto)
-  dateRange: DateRangeDto;
+  dateRange?: DateRangeDto;
 }

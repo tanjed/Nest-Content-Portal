@@ -9,6 +9,8 @@ import { ApiResponseInterceptor } from './shared/interceptors/response.intercept
 import { TimeZoneInterceptor } from './shared/interceptors/timezone.interceptor';
 import { CONTEXT_SERVICE_INTERFACE } from './shared/services/context.service.interface';
 import { RequestContextMiddleware } from './shared/middlewares/request-context.middleware';
+import { AttachmentBaseInterceptor } from './shared/interceptors/attachment-base.interceptor';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   dayjs.extend(utc)
@@ -39,6 +41,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ApiResponseInterceptor());
   app.useGlobalInterceptors(new TimeZoneInterceptor(contextService, reflector));
+  app.useGlobalInterceptors(new AttachmentBaseInterceptor(app.get(ConfigService)));
 
 
   app.enableCors({

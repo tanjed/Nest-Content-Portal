@@ -15,6 +15,7 @@ import {
 } from 'typeorm';
 import { Attachment } from '../../modules/admin/attachments/entity/attachment.entity';
 import { MaintainTimeZone } from '../decorator/timezone.decorator';
+import { AttachBase } from '../decorator/attachment-base.decorator';
 
 export enum ContentStatus {
   DRAFT = 'draft',
@@ -35,6 +36,7 @@ export class Content {
   @Column({ type: 'text' })
   body: string;
 
+  @AttachBase()
   @Column({ type: 'varchar', length: 500, nullable: true })
   thumbnail: string;
 

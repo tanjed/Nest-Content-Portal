@@ -20,9 +20,6 @@ import { MulterModule } from '@nestjs/platform-express';
       isGlobal: true,
       envFilePath: `.env`,
     }),
-    MulterModule.register({
-      dest: TEMP_PATH,
-    }),
     DatabaseModule,
     SharedModule,
     AdminModule,

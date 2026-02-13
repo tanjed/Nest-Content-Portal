@@ -31,10 +31,10 @@ export class ContentRepository extends BaseRepository<Content> implements Conten
 
         const [data, total] = await repo.findAndCount({
             where: {
-                createdAt: Between(
+                ...(dateRange && { createdAt: Between(
                     dayjs(dateRange.startDate).toDate(),
                     dayjs(dateRange.endDate).toDate(),
-                ),
+                )}),
             },
             relations: {
                 author: true,
