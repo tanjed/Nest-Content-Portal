@@ -29,7 +29,7 @@ export class QueueService implements QueueServiceInterface {
                 .on('error', reject);
         });
 
-        await this.attachmentService.insertAttachmentUrl(data.contentId, dest);
+        await this.attachmentService.insertAttachmentUrl(data.contentId, data.filename);
         fs.unlinkSync(data.source);
     }
 
