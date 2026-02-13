@@ -34,12 +34,18 @@ export class ContentService implements ContentServiceInterface {
       publishedAt: publishedAt ? new Date(publishedAt) : dayjs().utc().format(),
     };
 
-    const thumbnailFileName = `${randomUUID()}-${thumbnail.filename}`;
+    const filename = thumbnail.filename || thumbnail.originalname;
+    const thumbnailFileName = `${randomUUID()}-${filename}` + '.' + thumbnail.mimetype.split('/')[1];
     const destPath = join(STORAGE_PATH, thumbnailFileName);
 
     await fs.promises.mkdir(STORAGE_PATH, { recursive: true });
-    await fs.promises.copyFile(thumbnail.path, destPath);
-    await fs.promises.unlink(thumbnail.path);
+
+    if (thumbnail.path) {
+      await fs.promises.copyFile(thumbnail.path, destPath);
+      await fs.promises.unlink(thumbnail.path);
+    } else if (thumbnail.buffer) {
+      await fs.promises.writeFile(destPath, thumbnail.buffer);
+    }
 
     data.thumbnail = thumbnailFileName;
     const content = await this.contentRepository.create(data, queryRunner);
@@ -74,12 +80,18 @@ export class ContentService implements ContentServiceInterface {
     const data: DeepPartial<Content> = { ...updateContentDto };
 
     if (thumbnail) {
-      const thumbnailFileName = `${randomUUID()}-${thumbnail.filename}`;
+      const filename = thumbnail.filename || thumbnail.originalname;
+      const thumbnailFileName = `${randomUUID()}-${filename}` + '.' + thumbnail.mimetype.split('/')[1];
       const destPath = join(STORAGE_PATH, thumbnailFileName);
 
       await fs.promises.mkdir(STORAGE_PATH, { recursive: true });
-      await fs.promises.copyFile(thumbnail.path, destPath);
-      await fs.promises.unlink(thumbnail.path);
+
+      if (thumbnail.path) {
+        await fs.promises.copyFile(thumbnail.path, destPath);
+        await fs.promises.unlink(thumbnail.path);
+      } else if (thumbnail.buffer) {
+        await fs.promises.writeFile(destPath, thumbnail.buffer);
+      }
 
       data.thumbnail = thumbnailFileName;
     }

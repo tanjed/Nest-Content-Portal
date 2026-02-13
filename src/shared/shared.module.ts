@@ -5,9 +5,16 @@ import { RequestContextMiddleware } from './middlewares/request-context.middlewa
 import { ContextService } from './services/context.service';
 import { CONTEXT_SERVICE_INTERFACE } from './services/context.service.interface';
 import { RequestContext } from './types/request-context.type';
+import { MulterModule } from '@nestjs/platform-express';
+import { TEMP_PATH } from './constants';
 
 @Global()
 @Module({
+  imports: [
+    MulterModule.register({
+      dest: TEMP_PATH,
+    }),
+  ],
   providers: [TransactionService,
     {
       provide: AsyncLocalStorage,
@@ -19,6 +26,6 @@ import { RequestContext } from './types/request-context.type';
     },
     RequestContextMiddleware,
   ],
-  exports: [TransactionService, CONTEXT_SERVICE_INTERFACE],
+  exports: [TransactionService, CONTEXT_SERVICE_INTERFACE, MulterModule],
 })
 export class SharedModule { }

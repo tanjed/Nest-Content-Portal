@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MulterModule } from '@nestjs/platform-express';
-import { TEMP_PATH } from '@/shared/constants';
+
 
 import { SlugGeneratorPipe } from './pipe/slug.generator.pipe';
 import { ContentServiceModule } from './service/content.service.module';
