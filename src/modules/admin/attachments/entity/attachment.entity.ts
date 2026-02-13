@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Content } from "../../../../shared/entities/content.entity";
+import { AttachBase } from "@/shared/decorator/attachment-base.decorator";
 
 @Entity('attachments')
 export class Attachment {
@@ -9,6 +10,7 @@ export class Attachment {
     @Column({ type: 'varchar', length: 255 })
     filename: string;
 
+    @AttachBase()
     @Column({ type: 'varchar', length: 500 })
     url: string;
 
@@ -22,5 +24,6 @@ export class Attachment {
     updatedAt: Date;
 
     @ManyToOne(() => Content, (content) => content.attachments)
+    @JoinColumn({ name: 'content_id' })
     content: Content;
 };

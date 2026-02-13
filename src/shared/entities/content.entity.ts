@@ -92,17 +92,6 @@ export class Content {
   subCategory: Category;
 
   @OneToMany(() => Attachment, (attachment) => attachment.content)
+  @JoinColumn({ name: 'id' })
   attachments: Attachment[]
-
-  @AfterLoad()
-  setAttachment() {
-    if (this.attachments) {
-      this.attachments = this.attachments.map((attachment) => {
-        return {
-          ...attachment,
-          url: `${process.env.APP_URL}/${attachment.url}`,
-        };
-      });
-    }
-  }
 }

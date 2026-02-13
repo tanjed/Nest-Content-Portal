@@ -15,14 +15,7 @@ export class AttachmentBaseInterceptor implements NestInterceptor {
     }
 
     private attachBaseUrl(data: any) {
-        if (!data) {
-            return data;
-        }
-
-        const protoType = Object.getPrototypeOf(data);
-        const metaData = Reflect.getMetadata(ATTACHMENT_BASE_DECORATOR, protoType) || null;
-
-        if (!metaData) {
+        if (!data || typeof data !== 'object') {
             return data;
         }
 
@@ -30,19 +23,20 @@ export class AttachmentBaseInterceptor implements NestInterceptor {
             return data.map((item) => this.attachBaseUrl(item));
         }
 
+        const protoType = Object.getPrototypeOf(data);
+        const metaData = Reflect.getMetadata(ATTACHMENT_BASE_DECORATOR, protoType) || null;
+
         for (const key in data) {
             const value = data[key];
-            if (typeof value === 'object') {
+            if (value && typeof value === 'object') {
                 data[key] = this.attachBaseUrl(value);
                 continue;
             }
 
-            if (!metaData[key]) {
-                continue;
+            if (metaData && metaData[key]) {
+                const storagePath = STORAGE_PATH.replace('./', '');
+                data[key] = 'http://localhost:' + this.configService.get('APP_PORT') + '/' + storagePath + '/' + value;
             }
-
-            const storagePath = STORAGE_PATH.replace('./', '');
-            data[key] = 'http://localhost:' + this.configService.get('APP_PORT') + '/' + storagePath + '/' + value;
         }
         return data;
     }
