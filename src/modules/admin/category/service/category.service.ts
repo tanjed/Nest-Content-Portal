@@ -13,7 +13,7 @@ export class CategoryService implements CategoryServiceInterface {
   constructor(
     @Inject(CATEGORY_REPOSITORY_INTERFACE)
     private readonly categoryRepository: CategoryRepositoryInterface,
-  ) {}
+  ) { }
 
   async create(data: CreateCategoryDto): Promise<Category> {
     const existingByName = await this.categoryRepository.findByName(data.name);
@@ -57,4 +57,19 @@ export class CategoryService implements CategoryServiceInterface {
       throw new NotFoundException('Category not found');
     }
   }
+
+  async findAllSubCategoriesPaginated(dto: ListCategoryDto): Promise<PaginatedResult<Category>> {
+    return this.categoryRepository.findSubCategoriesPaginated(dto);
+  }
+
+  async findOneSubCategory(id: string): Promise<Category> {
+    const subCategory = await this.categoryRepository.findSubCategory(id);
+
+    if (!subCategory) {
+      throw new NotFoundException('Sub category not found');
+    }
+
+    return subCategory;
+  }
+
 }

@@ -13,6 +13,7 @@ import { AuthenticateGuard } from "src/shared/guard/authenticate.guard";
 import { AuthorizeGuard } from "src/shared/guard/authorize.guard";
 import { UseGuards } from "@nestjs/common";
 import { Public } from "@/shared/decorator/public-route.decorator";
+import { UpdatePasswordDto } from "../dto/update-password.dto";
 
 @Controller('admin/auth')
 @UseGuards(AuthenticateGuard, AuthorizeGuard)
@@ -57,4 +58,8 @@ export class UserAuthController {
             token: token,
         };
     }
+
+    @Post('update-password')
+    @Can(PERMISSIONS.USER.UPDATE_PASSWORD)
+    async updatePassword(@Body() body: UpdatePasswordDto) { }
 }

@@ -1,6 +1,7 @@
+import { MaintainTimeZone } from "@/shared/decorator/timezone.decorator";
 import { Content } from "../../../../shared/entities/content.entity";
 
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('categories')
 export class Category {
@@ -19,11 +20,17 @@ export class Category {
     @Column({ name: 'parent_id', type: 'uuid', nullable: true })
     parentId?: string;
 
+    @MaintainTimeZone()
     @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
+    @MaintainTimeZone()
     @Column({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+
+    @MaintainTimeZone()
+    @DeleteDateColumn({ name: 'deleted_at', select: false })
+    deletedAt: Date;
 
     @OneToMany(() => Category, subCategory => subCategory.parentCategory)
     @JoinColumn({ name: 'parent_id', referencedColumnName: 'id' })

@@ -24,6 +24,7 @@ export const PERMISSIONS = {
     UPDATE: 'user.update',
     DELETE: 'user.delete',
     MANAGE_ROLES: 'user.manage_roles',
+    UPDATE_PASSWORD: 'user.update_password',
   },
 
   // Role & Permission Management

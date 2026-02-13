@@ -5,6 +5,7 @@ import {
   AfterLoad,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Index,
   ManyToOne,
@@ -70,6 +71,10 @@ export class Content {
   @MaintainTimeZone()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @MaintainTimeZone()
+  @DeleteDateColumn({ name: 'deleted_at', select: false })
+  deletedAt: Date;
 
   @ManyToOne(() => User, (user) => user.contents)
   author: User;

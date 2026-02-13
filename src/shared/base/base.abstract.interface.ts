@@ -42,7 +42,7 @@ export abstract class BaseRepository<T extends object> implements BaseRepository
     async delete(id: string, queryRunner?: QueryRunner): Promise<boolean> {
         const repo = this.getRepository(this.repository, queryRunner);
         const options: FindOptionsWhere<T> = { id } as any;
-        const result = await repo.delete(options);
+        const result = await repo.softDelete(options);
         return (result?.affected ?? 0) > 0;
     }
 

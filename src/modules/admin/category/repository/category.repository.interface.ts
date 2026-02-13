@@ -9,4 +9,6 @@ export interface CategoryRepositoryInterface extends BaseRepositoryInterface<Cat
   findBySlug(slug: string): Promise<Category | null>;
   findByName(name: string): Promise<Category | null>;
   findPaginated(dto: ListCategoryDto): Promise<PaginatedResult<Category>>;
+  findSubCategoriesPaginated(dto: ListCategoryDto): Promise<PaginatedResult<Category>>;
+  findSubCategory(id: string): Promise<Category | null>;
 }

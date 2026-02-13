@@ -23,21 +23,45 @@ export class CategoryAdminController {
     return this.categoryService.findAllPaginated(dto);
   }
 
+  @Get('sub-categories')
+  @Can(PERMISSIONS.CATEGORY.VIEW)
+  async findAllSubCategories(@Query() dto: ListCategoryDto) {
+    return this.categoryService.findAllSubCategoriesPaginated(dto);
+  }
+
   @Get(':id')
   @Can(PERMISSIONS.CATEGORY.VIEW)
   async findOne(@Param('id') id: string) {
     return this.categoryService.findOne(id);
   }
 
+  @Get('sub-categories/:id')
+  @Can(PERMISSIONS.CATEGORY.VIEW)
+  async findOneSubCategory(@Param('id') id: string) {
+    return this.categoryService.findOneSubCategory(id);
+  }
+
   @Post()
   @Can(PERMISSIONS.CATEGORY.CREATE)
   async create(@Body() data: CreateCategoryDto) {
+    if (data.categoryId) {
+      const parentCategory = await this.categoryService.findOne(data.categoryId);
+      if (!parentCategory) {
+        throw new Error('Parent category not found');
+      }
+    }
     return this.categoryService.create(data);
   }
 
   @Put(':id')
   @Can(PERMISSIONS.CATEGORY.UPDATE)
   async update(@Param('id') id: string, @Body() data: UpdateCategoryDto) {
+    if (data.categoryId) {
+      const parentCategory = await this.categoryService.findOne(data.categoryId);
+      if (!parentCategory) {
+        throw new Error('Parent category not found');
+      }
+    }
     return this.categoryService.update(id, data);
   }
 

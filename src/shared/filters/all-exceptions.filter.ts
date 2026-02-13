@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus
 } from '@nestjs/common';
+import { TokenExpiredError } from '@nestjs/jwt';
 import { Response } from 'express';
 import { QueryFailedError } from 'typeorm';
 
@@ -33,7 +34,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status = HttpStatus.BAD_REQUEST
     } else if (exception instanceof QueryFailedError) {
       message = 'Failed to execute the query'
-    } else if (exception instanceof HttpException) {
+    } else if (exception instanceof TokenExpiredError) {
+      message = 'Token expired'
+      status = HttpStatus.UNAUTHORIZED
+    }
+    else if (exception instanceof HttpException) {
       message = exception.message;
       status = exception.getStatus();
     }
