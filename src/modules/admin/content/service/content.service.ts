@@ -8,8 +8,7 @@ import { UpdateContentDto } from '../dto/update-content.dto';
 import type { ContentRepositoryInterface } from '../repository/content.repository.interface';
 import { CONTENT_REPOSITORY_INTERFACE } from '../repository/content.repository.interface';
 import { ContentServiceInterface } from './content.service.interface';
-import type { AttachmentServiceInterface } from '../../attachments/service/attachment.service.interface';
-import { ATTACHMENT_SERVICE_INTERFACE } from '../../attachments/service/attachment.service.interface';
+import { QUEUE_SERVICE_INTERFACE, QueueServiceInterface } from 'src/infrastructure/queue/service/queue.service.interface';
 import { Content } from '../../../../shared/entities/content.entity';
 import * as fs from 'fs';
 import { STORAGE_PATH } from '../../../../shared/constants';
@@ -21,8 +20,8 @@ export class ContentService implements ContentServiceInterface {
   constructor(
     @Inject(CONTENT_REPOSITORY_INTERFACE)
     private readonly contentRepository: ContentRepositoryInterface,
-    @Inject(ATTACHMENT_SERVICE_INTERFACE)
-    private readonly attachmentService: AttachmentServiceInterface,
+    @Inject(QUEUE_SERVICE_INTERFACE)
+    private readonly queueService: QueueServiceInterface,
   ) { }
 
   async create(createContentDto: CreateContentDto, thumbnail: Express.Multer.File, files?: Express.Multer.File[], queryRunner?: QueryRunner): Promise<Content> {
@@ -51,7 +50,7 @@ export class ContentService implements ContentServiceInterface {
     const content = await this.contentRepository.create(data, queryRunner);
 
     if (files && files.length > 0) {
-      await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
+      await this.queueService.enqueueAttachmentForUpload(content.id, files);
     }
     return content;
   }
@@ -103,7 +102,7 @@ export class ContentService implements ContentServiceInterface {
     }
 
     if (files && files.length > 0) {
-      await this.attachmentService.enqueueAttachmentForUpload(content.id, files);
+      await this.queueService.enqueueAttachmentForUpload(content.id, files);
     }
 
     return content;

@@ -4,7 +4,7 @@ import { DatabaseModule } from './shared/db/database.module';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
 import { ApiResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { SharedModule } from './shared/shared.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { REQUEST_CONTEXT_STORE, STORAGE_PATH, TEMP_PATH } from './shared/constants';
 import { PublicModule } from './modules/public/public.module';
@@ -14,6 +14,9 @@ import { AsyncLocalStorage } from 'async_hooks';
 import { RequestContext } from './shared/types/request-context.type';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
+
+
+import { QueueModule } from './infrastructure/queue/queue.module';
 
 @Module({
   imports: [
@@ -29,6 +32,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: STORAGE_PATH,
       serveRoot: '/storage',
     }),
+    QueueModule,
   ],
   controllers: [],
   providers: [],

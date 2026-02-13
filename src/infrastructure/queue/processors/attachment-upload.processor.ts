@@ -2,8 +2,7 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Inject } from '@nestjs/common';
 import { Job } from 'bullmq';
 import { ATTACHMENT_JOBS, QUEUE_AVAILABLE } from '../queue.list';
-import type { AttachmentServiceInterface } from '../../../modules/admin/attachments/service/attachment.service.interface';
-import { ATTACHMENT_SERVICE_INTERFACE } from '../../../modules/admin/attachments/service/attachment.service.interface';
+import { QUEUE_SERVICE_INTERFACE, QueueServiceInterface } from '../service/queue.service.interface';
 
 export interface AttachmentUploadJobData {
   source: string;
@@ -14,16 +13,16 @@ export interface AttachmentUploadJobData {
 @Processor(QUEUE_AVAILABLE.CONTENT_ATTACHMENT_UPLOAD)
 export class AttachmentUploadProcessor extends WorkerHost {
   constructor(
-    @Inject(ATTACHMENT_SERVICE_INTERFACE)
-    private readonly attachmentService: AttachmentServiceInterface,
+    @Inject(QUEUE_SERVICE_INTERFACE)
+    private readonly queueService: QueueServiceInterface,
   ) {
     super();
   }
 
   async process(job: Job, token?: string): Promise<any> {
-    switch(job.name) {
+    switch (job.name) {
       case ATTACHMENT_JOBS.UPLOAD:
-        await this.attachmentService.uploadAttachments(job.data);
+        await this.queueService.uploadAttachment(job.data);
       default:
         throw new Error(`Unknown job name: ${job.name}`);
     }
