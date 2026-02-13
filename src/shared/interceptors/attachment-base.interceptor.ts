@@ -15,6 +15,10 @@ export class AttachmentBaseInterceptor implements NestInterceptor {
     }
 
     private attachBaseUrl(data: any) {
+        if (!data) {
+            return data;
+        }
+
         const protoType = Object.getPrototypeOf(data);
         const metaData = Reflect.getMetadata(ATTACHMENT_BASE_DECORATOR, protoType) || null;
 
@@ -33,8 +37,14 @@ export class AttachmentBaseInterceptor implements NestInterceptor {
                 continue;
             }
 
-            data[key] = 'http://localhost:' + this.configService.get('APP_PORT') + '/' + STORAGE_PATH + '/' + value;
+            if (!metaData[key]) {
+                continue;
+            }
+
+            const storagePath = STORAGE_PATH.replace('./', '');
+            data[key] = 'http://localhost:' + this.configService.get('APP_PORT') + '/' + storagePath + '/' + value;
         }
+        return data;
     }
 
 }

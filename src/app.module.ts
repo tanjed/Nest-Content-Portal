@@ -13,6 +13,7 @@ import { RequestContextMiddleware } from './shared/middlewares/request-context.m
 import { AsyncLocalStorage } from 'async_hooks';
 import { RequestContext } from './shared/types/request-context.type';
 import { MulterModule } from '@nestjs/platform-express';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -24,6 +25,10 @@ import { MulterModule } from '@nestjs/platform-express';
     SharedModule,
     AdminModule,
     PublicModule,
+    ServeStaticModule.forRoot({
+      rootPath: STORAGE_PATH,
+      serveRoot: '/storage',
+    }),
   ],
   controllers: [],
   providers: [],
