@@ -8,6 +8,7 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -79,12 +80,15 @@ export class Content {
   deletedAt: Date;
 
   @ManyToOne(() => User, (user) => user.contents)
+  @JoinColumn({ name: 'author_id' })
   author: User;
 
   @ManyToOne(() => Category, (category) => category.contents)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @ManyToOne(() => Category, (category) => category.subCategoryContents)
+  @JoinColumn({ name: 'sub_category_id' })
   subCategory: Category;
 
   @OneToMany(() => Attachment, (attachment) => attachment.content)

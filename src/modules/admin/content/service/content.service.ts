@@ -67,7 +67,7 @@ export class ContentService implements ContentServiceInterface {
   }
 
   async find(id: string, queryRunner?: QueryRunner): Promise<Content> {
-    const content = await this.contentRepository.find(id);
+    const content = await this.contentRepository.find(id, { author: true, attachments: true, category: true, subCategory: true });
 
     if (!content) {
       throw new NotFoundException(`Content with ID ${id} not found`);
